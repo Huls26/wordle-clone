@@ -8,13 +8,15 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:vitest/recommended",
         'plugin:react/jsx-runtime',
-        'plugin:react-hooks/recommended'
+        'plugin:react-hooks/recommended',
+        'airbnb'
     ],
     "overrides": [
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "tsconfig.vite.json"
     },
     "plugins": [
         "react",
