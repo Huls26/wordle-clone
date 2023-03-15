@@ -9,7 +9,9 @@
     "dev": "vite",
     "preview": "vite preview",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix --max-warnings=0"
   },
   "dependencies": {
     "react": "^18.2.0",
