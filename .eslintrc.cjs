@@ -7,6 +7,9 @@ module.exports = {
     // "eslint:recommended",\
     'airbnb',
     'airbnb/hooks',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:vitest/recommended',
     'plugin:react/jsx-runtime',
@@ -26,16 +29,17 @@ module.exports = {
   rules: {
     // 'linebreak-style': ['error', 'window'],
     'linebreak-style': 0,
+    'import/extensions': 0,
   },
   ignorePatterns: ['test-utils.tsx'],
   settings: {
     react: {
       version: 'detect',
     },
-    // 'import/resolver': {
-    //   node: {
-    //     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    //   },
-    // },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
