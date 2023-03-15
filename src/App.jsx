@@ -1,12 +1,12 @@
-import { useCounter } from './hooks/useCounter'
-import './App.css'
+import { useCounter } from './hooks/useCounter';
+import './App.css';
 
 export default function App() {
-    const { count, increment } = useCounter()
-    var num = 1;
+  const { count, increment } = useCounter();
+  const num = 1;
 
-    return (
-      <div className="App">
+  return (
+    <div className="App">
       <header className="App-header">
         <p>Hello Vite + React!</p>
         <p>{ num }</p>
@@ -15,11 +15,17 @@ export default function App() {
             type="button"
             onClick={increment}
           >
-            count is: {count}
+            count is:
+            {' '}
+            {count}
           </button>
         </p>
         <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
+          Edit
+          {' '}
+          <code>App.tsx</code>
+          {' '}
+          and save to test HMR updates.
         </p>
         <p>
           <a
@@ -42,5 +48,5 @@ export default function App() {
         </p>
       </header>
     </div>
-    )
+  );
 }
