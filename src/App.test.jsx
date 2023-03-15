@@ -20,4 +20,9 @@ describe('Simple working test', () => {
     expect(element.className).toBe('App-header');
     expect(getComputedStyle(element).display).toBe('flex');
   });
+
+  it('valid link', () => {
+    render(<App />);
+    expect(screen.getByRole('link', { name: /Vite Docs/ }));
+  });
 });

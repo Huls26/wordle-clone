@@ -3,13 +3,11 @@ import './App.css';
 
 export default function App() {
   const { count, increment } = useCounter();
-  const num = 1;
 
   return (
     <div className="App">
       <header className="App-header">
         <p>Hello Vite + React!</p>
-        <p>{ num }</p>
         <p>
           <button
             type="button"
