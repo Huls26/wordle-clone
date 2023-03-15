@@ -27,9 +27,15 @@ module.exports = {
     // 'linebreak-style': ['error', 'window'],
     'linebreak-style': 0,
   },
+  eslintIgnore: ['test-utils.tsx'],
   settings: {
     react: {
       version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
     },
   },
 };
