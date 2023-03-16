@@ -1,19 +1,9 @@
-import { useEffect, useState } from 'react';
+import useFetchData from '@hooks/useFetchData';
 
 export default function Mainpage() {
-  const [word, setWord] = useState(() => '');
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch('https://random-word-api.herokuapp.com/word');
-      const data = await res.json();
-      setWord(() => data);
-    }
-
-    fetchData();
-  }, []);
+  const { data } = useFetchData();
 
   return (
-    <div>{ word }</div>
+    <div>{ data }</div>
   );
 }

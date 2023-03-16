@@ -21,5 +21,13 @@
     "vite.config.ts",
     "./src", 
     ".eslintrc.cjs"
-  ]
+  ],
+  "paths": {
+    "@api/*": ["src/api/*"],
+    "@assets/*": ["src/assets/*"],
+    "@hooks/*": ["src/hooks/*"],
+    "@components/*": ["src/components/*"], 
+    "@features/*": ["src/features/*"],
+    "@pages/*": ["src/pages/*"],
+  }
 }

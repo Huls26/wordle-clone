@@ -28,6 +28,7 @@ module.exports = {
   ],
   rules: {
     // 'linebreak-style': ['error', 'window'],
+    'import/no-unresolved': 0,
     'linebreak-style': 0,
     'import/extensions': 0,
     'import/default': 0,
