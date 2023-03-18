@@ -11,8 +11,15 @@ export default function Counter() {
     setCount(() => count + 1);
   }
 
-  function handleInputChange() {
+  function handleInputChange(event) {
+    const { target } = event;
+    const { value } = target;
 
+    if (value.length) {
+      setCount(() => parseInt(value, 10));
+    } else {
+      setCount(() => null);
+    }
   }
 
   return (
