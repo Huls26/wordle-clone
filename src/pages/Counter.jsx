@@ -4,19 +4,41 @@ export default function Counter() {
   const [count, setCount] = useState(() => null);
 
   function decrementBtn() {
-    setCount(() => count - 1);
+    const minimumValue = -100;
+
+    if (count >= minimumValue) {
+      setCount(() => minimumValue);
+    } else {
+      setCount(() => count - 1);
+    }
   }
 
   function incrementBtn() {
-    setCount(() => count + 1);
+    const maximumValue = 100;
+
+    if (count >= maximumValue) {
+      setCount(() => maximumValue);
+    } else {
+      setCount(() => count + 1);
+    }
   }
 
   function handleInputChange(event) {
     const { target } = event;
     const { value } = target;
+    const maximumValue = 100;
+    const minimumValue = -100;
+    const parseValue = parseInt(value, 10);
+    let isValidValue = value;
+
+    if (parseValue >= maximumValue) {
+      isValidValue = maximumValue;
+    } else if (parseValue <= minimumValue) {
+      isValidValue = minimumValue;
+    }
 
     if (value.length) {
-      setCount(() => parseInt(value, 10));
+      setCount(() => parseInt(isValidValue, 10));
     } else {
       setCount(() => null);
     }

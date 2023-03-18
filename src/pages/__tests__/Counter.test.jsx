@@ -101,5 +101,31 @@ describe('counter', () => {
 
       expect(counterElement.textContent).toBe('Counter 0');
     });
+
+    test('Maximun value to set is 100', async () => {
+      render(<Counter />);
+      const inputElement = screen.getByPlaceholderText('Set number');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const incrementBtn = screen.getByRole('button', { name: '+' });
+
+      await userEvent.type(inputElement, '101');
+      expect(counterElement.textContent).toBe('Counter 100');
+
+      await userEvent.click(incrementBtn);
+      expect(counterElement.textContent).toBe('Counter 100');
+    });
+
+    test('Minimum value -100', async () => {
+      render(<Counter />);
+      const inputElement = screen.getByPlaceholderText('Set number');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const decrementBtn = screen.getByRole('button', { name: '-' });
+
+      await userEvent.type(inputElement, '-101');
+      expect(counterElement.textContent).toBe('Counter -100');
+
+      await userEvent.click(decrementBtn);
+      expect(counterElement.textContent).toBe('Counter -100');
+    });
   });
 });
