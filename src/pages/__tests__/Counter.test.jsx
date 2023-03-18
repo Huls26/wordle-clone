@@ -1,5 +1,9 @@
-import { describe, test, expect } from 'vitest';
-import { render, screen, userEvent } from '@utils/test-utils';
+import {
+  describe, test, expect,
+} from 'vitest';
+import {
+  render, screen, userEvent,
+} from '@utils/test-utils';
 import Counter from '../Counter';
 
 describe('counter', () => {
@@ -47,7 +51,29 @@ describe('counter', () => {
     });
   });
 
-  describe.skip('set input counter', () => {
+  describe('input counter', () => {
+    test('input text', () => {
+      render(<Counter />);
+      const inputElement = screen.getByPlaceholderText('Set number');
+      expect(inputElement).toBeInTheDocument();
+    });
 
+    test('when first render "counter 0" input value should be null', () => {
+      render(<Counter />);
+      const inputElement = screen.getByPlaceholderText('Set number');
+      // logRoles(inputElement);
+      expect(inputElement.value).toHaveLength(0);
+      expect(inputElement.value).toBeFalsy();
+    });
+
+    test.skip('input set value', async () => {
+      render(<Counter />);
+      const inputElement = screen.getByPlaceholderText('Set number');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+
+      await userEvent.type(inputElement, '1');
+
+      expect(counterElement).toHaveTextContent('1');
+    });
   });
 });

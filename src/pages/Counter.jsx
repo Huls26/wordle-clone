@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function Counter() {
-  const [count, setCount] = useState(() => 0);
+  const [count, setCount] = useState(() => null);
 
   function decrementBtn() {
     setCount(() => count - 1);
@@ -10,29 +10,45 @@ export default function Counter() {
   function incrementBtn() {
     setCount(() => count + 1);
   }
+
+  function handleInputChange() {
+
+  }
+
   return (
-    <section
-      className="flex space-x-3 justify-center text-xl"
+    <main
+      className="flex flex-col items-center space-y-3"
     >
-      <button
-        type="button"
-        onClick={decrementBtn}
-        className="bg-[#32a852] px-3 rounded-lg font-bold hover:bg-[#3dc462]"
+      <input
+        type="number"
+        className="border max-w-[14em] px-3"
+        value={count === null ? '' : count}
+        placeholder="Set number"
+        onChange={handleInputChange}
+      />
+      <section
+        className="flex space-x-3 justify-center text-xl"
       >
-        -
-      </button>
-      <h1>
-        Counter
-        {' '}
-        {count}
-      </h1>
-      <button
-        type="button"
-        onClick={incrementBtn}
-        className="bg-[#32a852] px-3 rounded-lg font-bold hover:bg-[#3dc462]"
-      >
-        +
-      </button>
-    </section>
+        <button
+          type="button"
+          onClick={decrementBtn}
+          className="bg-[#32a852] px-3 rounded-lg font-bold hover:bg-[#3dc462]"
+        >
+          -
+        </button>
+        <h1>
+          Counter
+          {' '}
+          {count === null ? 0 : count}
+        </h1>
+        <button
+          type="button"
+          onClick={incrementBtn}
+          className="bg-[#32a852] px-3 rounded-lg font-bold hover:bg-[#3dc462]"
+        >
+          +
+        </button>
+      </section>
+    </main>
   );
 }
