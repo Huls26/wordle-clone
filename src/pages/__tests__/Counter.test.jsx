@@ -1,5 +1,5 @@
 import {
-  describe, test, expect,
+  describe, test, expect, beforeEach,
 } from 'vitest';
 import {
   render, screen, userEvent, // logRoles,
@@ -8,19 +8,20 @@ import Counter from '../Counter';
 
 describe('counter', () => {
   describe('counter display', () => {
-    test('first render counter should be "Counter 0"', () => {
+    beforeEach(() => {
       render(<Counter />);
+    });
+
+    test('first render counter should be "Counter 0"', () => {
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
       expect(counterElement).toBeInTheDocument();
     });
 
     test('button increment display', () => {
-      render(<Counter />);
       expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
     });
 
     test('The value of heading should be "Counter 1" when increment button is click', async () => {
-      render(<Counter />);
       const incrementBtn = screen.getByRole('button', { name: '+' });
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
 
@@ -30,8 +31,6 @@ describe('counter', () => {
     });
 
     test('decrement btn when click the counter will be "counter -1"', async () => {
-      render(<Counter />);
-
       const decrementBtn = screen.getByRole('button', { name: '-' });
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
 
@@ -41,7 +40,6 @@ describe('counter', () => {
     });
 
     test('counter value is 2 when increment btn is click double', async () => {
-      render(<Counter />);
       const incrementBtn = screen.getByRole('button', { name: '+' });
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
 
@@ -52,14 +50,16 @@ describe('counter', () => {
   });
 
   describe('input counter', () => {
-    test('input text', () => {
+    beforeEach(() => {
       render(<Counter />);
+    });
+
+    test('input text', () => {
       const inputElement = screen.getByPlaceholderText('Set number');
       expect(inputElement).toBeInTheDocument();
     });
 
     test('when first render "counter 0" input value should be null', () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       // logRoles(inputElement);
       expect(inputElement.value).toHaveLength(0);
@@ -67,7 +67,6 @@ describe('counter', () => {
     });
 
     test('input set value', async () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
 
@@ -80,7 +79,6 @@ describe('counter', () => {
     });
 
     test('when the value is set to 10 and click increment button the counter text content is "Counter 11"', async () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
       const incrementBtn = screen.getByRole('button', { name: '+' });
@@ -93,7 +91,6 @@ describe('counter', () => {
     });
 
     test('when input type "123{backspace}{backspace}{backspace}" the counter textcontent should be "Counter 0"', async () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
 
@@ -103,7 +100,6 @@ describe('counter', () => {
     });
 
     test('Maximun value to set is 100', async () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
       const incrementBtn = screen.getByRole('button', { name: '+' });
@@ -116,7 +112,6 @@ describe('counter', () => {
     });
 
     test('Minimum value -100', async () => {
-      render(<Counter />);
       const inputElement = screen.getByPlaceholderText('Set number');
       const counterElement = screen.getByRole('heading', { name: /counter 0/i });
       const decrementBtn = screen.getByRole('button', { name: '-' });
