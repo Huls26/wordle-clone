@@ -124,7 +124,61 @@ describe('counter', () => {
     });
   });
 
-  describe.skip('incrementor', () => {
+  describe('incrementor', () => {
+    beforeEach(() => {
+      render(<Counter />);
+    });
 
+    test('display input for incrementor', () => {
+      expect(screen.getByPlaceholderText('Enter Incrementor')).toBeInTheDocument();
+    });
+
+    test('incrementor is set to "5" when increment is click display counter is "Counter 5"', async () => {
+      const incrementorElement = screen.getByPlaceholderText('Enter Incrementor');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const incrementBtn = screen.getByRole('button', { name: '+' });
+
+      await userEvent.type(incrementorElement, '5');
+      await userEvent.click(incrementBtn);
+
+      expect(counterElement.textContent).toBe('Counter 5');
+    });
+
+    test('input number is set to "55" and incrementor is set to 10 then click decrement btn counter "Counter 45"', async () => {
+      const inputElement = screen.getByPlaceholderText('Set number');
+      const incrementorElement = screen.getByPlaceholderText('Enter Incrementor');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const decrementBtn = screen.getByRole('button', { name: '-' });
+
+      await userEvent.type(inputElement, '55');
+      await userEvent.type(incrementorElement, '10');
+      await userEvent.click(decrementBtn);
+
+      expect(counterElement).toHaveTextContent('45');
+    });
+
+    test('Counter should not greater than 100', async () => {
+      const inputElement = screen.getByPlaceholderText('Set number');
+      const incrementorElement = screen.getByPlaceholderText('Enter Incrementor');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const incrementBtn = screen.getByRole('button', { name: '+' });
+
+      await userEvent.type(inputElement, '96');
+      await userEvent.type(incrementorElement, '10');
+      await userEvent.click(incrementBtn);
+
+      expect(counterElement.textContent).toBe('Counter 100');
+    });
+
+    test('incrementor when set a value "123{backspace}{backspace}{backspace}" counter display should be 0 when click increment btn', async () => {
+      const incrementorElement = screen.getByPlaceholderText('Enter Incrementor');
+      const counterElement = screen.getByRole('heading', { name: /counter 0/i });
+      const incrementBtn = screen.getByRole('button', { name: '+' });
+
+      await userEvent.type(incrementorElement, '123{backspace}{backspace}{backspace}');
+      await userEvent.click(incrementBtn);
+
+      expect(counterElement.textContent).toBe('Counter 1');
+    });
   });
 });

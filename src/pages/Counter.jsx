@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 export default function Counter() {
   const [count, setCount] = useState(() => null);
+  const [incrementor, setIncrementor] = useState(() => 1);
 
   function validValueUtils(value, callback) {
     const maximumValue = 100;
@@ -22,11 +23,25 @@ export default function Counter() {
     }
   }
 
+  function minMaxValue(value) {
+    const maximumValue = 100;
+    const minimumValue = -100;
+
+    if (value >= maximumValue) {
+      return maximumValue;
+    }
+
+    if (value <= minimumValue) {
+      return minimumValue;
+    }
+    return value;
+  }
+
   function decrementBtn() {
     const minimumValue = -100;
     validValueUtils(count, (isValidValue) => {
       if (isValidValue !== minimumValue) {
-        setCount(() => isValidValue - 1);
+        setCount(() => minMaxValue(isValidValue - incrementor));
       }
     });
   }
@@ -35,7 +50,7 @@ export default function Counter() {
     const minimumValue = 100;
     validValueUtils(count, (isValidValue) => {
       if (isValidValue !== minimumValue) {
-        setCount(() => isValidValue + 1);
+        setCount(() => minMaxValue(isValidValue + incrementor));
       }
     });
   }
@@ -45,6 +60,14 @@ export default function Counter() {
     const { value } = target;
 
     validValueUtils(value, (isValidValue) => setCount(() => parseInt(isValidValue, 10)));
+  }
+
+  function handleIncrementor(event) {
+    const { target } = event;
+    const { value } = target;
+    const isValidValue = value.length ? value : 1;
+
+    setIncrementor(() => parseInt(isValidValue, 10));
   }
 
   return (
@@ -81,6 +104,7 @@ export default function Counter() {
           +
         </button>
       </section>
+      <input type="number" placeholder="Enter Incrementor" onChange={handleIncrementor} />
     </main>
   );
 }
