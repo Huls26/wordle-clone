@@ -3,33 +3,11 @@ import { useState } from 'react';
 export default function Counter() {
   const [count, setCount] = useState(() => null);
 
-  function decrementBtn() {
-    const minimumValue = -100;
-
-    if (count >= minimumValue) {
-      setCount(() => minimumValue);
-    } else {
-      setCount(() => count - 1);
-    }
-  }
-
-  function incrementBtn() {
-    const maximumValue = 100;
-
-    if (count >= maximumValue) {
-      setCount(() => maximumValue);
-    } else {
-      setCount(() => count + 1);
-    }
-  }
-
-  function handleInputChange(event) {
-    const { target } = event;
-    const { value } = target;
+  function validValueUtils(value, callback) {
     const maximumValue = 100;
     const minimumValue = -100;
     const parseValue = parseInt(value, 10);
-    let isValidValue = value;
+    let isValidValue = value !== null ? value : 0;
 
     if (parseValue >= maximumValue) {
       isValidValue = maximumValue;
@@ -37,11 +15,36 @@ export default function Counter() {
       isValidValue = minimumValue;
     }
 
-    if (value.length) {
-      setCount(() => parseInt(isValidValue, 10));
+    if (`${value}`.length) {
+      callback(isValidValue);
     } else {
       setCount(() => null);
     }
+  }
+
+  function decrementBtn() {
+    const minimumValue = -100;
+    validValueUtils(count, (isValidValue) => {
+      if (isValidValue !== minimumValue) {
+        setCount(() => isValidValue - 1);
+      }
+    });
+  }
+
+  function incrementBtn() {
+    const minimumValue = 100;
+    validValueUtils(count, (isValidValue) => {
+      if (isValidValue !== minimumValue) {
+        setCount(() => isValidValue + 1);
+      }
+    });
+  }
+
+  function handleInputChange(event) {
+    const { target } = event;
+    const { value } = target;
+
+    validValueUtils(value, (isValidValue) => setCount(() => parseInt(isValidValue, 10)));
   }
 
   return (
@@ -68,7 +71,7 @@ export default function Counter() {
         <h1>
           Counter
           {' '}
-          {count === null ? 0 : count}
+          { count === null ? 0 : count }
         </h1>
         <button
           type="button"

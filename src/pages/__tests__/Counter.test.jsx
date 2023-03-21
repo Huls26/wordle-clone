@@ -123,4 +123,8 @@ describe('counter', () => {
       expect(counterElement.textContent).toBe('Counter -100');
     });
   });
+
+  describe.skip('incrementor', () => {
+
+  });
 });
