@@ -182,3 +182,7 @@ describe('counter', () => {
     });
   });
 });
+
+// create fetch random user
+// https://randomuser.me/api/?results=5000
+// setTimeout => 500ms when mock data

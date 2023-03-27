@@ -1,9 +1,17 @@
-import useFetchData from '@hooks/useFetchData';
+import { useEffect, useState } from 'react';
+// import fetchData from '@api/getRandomWord';
 
 export default function Mainpage() {
-  const { data } = useFetchData();
+  const [isLoading, setIsLoading] = useState(() => true);
+  // const [display] = useState(() => 'for sample');
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading((() => false)), 1000);
+  }, []);
 
   return (
-    <div>{ data }</div>
+    <section>
+      { isLoading ? '...Loading' : <div data-testid="output-data">for sample</div>}
+    </section>
   );
 }
