@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-// import fetchData from '@api/getRandomWord';
+import fetchData from '@api/getRandomWord';
 
 export default function Mainpage() {
-  const [isLoading, setIsLoading] = useState(() => true);
-  // const [display] = useState(() => 'for sample');
+  const [display, setDiplay] = useState(() => null);
 
   useEffect(() => {
-    setTimeout(() => setIsLoading((() => false)), 1000);
+    fetchData((res) => setDiplay(() => res));
   }, []);
 
   return (
     <section>
-      { isLoading ? '...Loading' : <div data-testid="output-data">for sample</div>}
+      { !display ? '...Loading' : (
+        <div data-testid="output-data">
+          { display }
+          {' '}
+        </div>
+      )}
     </section>
   );
 }

@@ -7,7 +7,7 @@ import {
 import Mainpage from '../Mainpage';
 
 describe('mainPage', () => {
-  describe.only('Mainpage fetch data', () => {
+  describe('Mainpage fetch data', () => {
     beforeEach(async () => {
       render(<Mainpage />);
       await waitFor(() => screen.getByTestId('output-data'), { timeout: 3000 });
