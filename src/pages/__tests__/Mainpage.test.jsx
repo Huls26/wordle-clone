@@ -2,7 +2,7 @@ import {
   describe, test, expect, beforeEach, // vi,
 } from 'vitest';
 import {
-  render, screen, waitFor, logRoles,
+  render, screen, waitFor, // logRoles,
 } from '@utils/test-utils';
 import Mainpage from '../Mainpage';
 
@@ -15,7 +15,7 @@ describe('mainPage', () => {
 
     test('Display some value', () => {
       const outputElement = screen.getByTestId('output-data');
-      logRoles(outputElement);
+      // logRoles(outputElement);
       expect(outputElement.textContent.length).toBeGreaterThan(1);
     });
 
@@ -25,8 +25,25 @@ describe('mainPage', () => {
     });
 
     test('use wait for to sync', async () => {
-      await waitFor(() => screen.getByTestId('output-data'));
+      // await waitFor(() => screen.getByTestId('output-data'));
       expect(screen.getByTestId('output-data')).toBeInTheDocument();
+    });
+
+    test('return value string', () => {
+      const displayElement = screen.getByTestId('output-data');
+      expect(typeof displayElement.textContent).toBe('string');
+    });
+
+    describe('fetch data', () => {
+      test('Return mock value', () => {
+        const displayElement = screen.getByTestId('output-data');
+        expect(typeof displayElement.textContent).toBe('string');
+      });
+
+      test('return Value "Testing"', () => {
+        const displayElement = screen.getByTestId('output-data');
+        expect(displayElement).toHaveTextContent('Testing');
+      });
     });
   });
 });

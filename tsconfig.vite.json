@@ -30,5 +30,6 @@
     "@features/*": ["src/features/*"],
     "@pages/*": ["src/pages/*"],
     "@utils/*": ["src/utils/*"],
+    "@mocks/*": ["src/mocks/*"],
   }
 }

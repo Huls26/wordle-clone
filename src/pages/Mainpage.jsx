@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react';
-import fetchData from '@api/getRandomWord';
+// import { useEffect, useState } from 'react';
+// import fetchData from '@api/getRandomWord';
+import useFetchData from '../hooks/useFetchData';
 
 export default function Mainpage() {
-  const [display, setDiplay] = useState(() => null);
-
-  useEffect(() => {
-    fetchData((res) => setDiplay(() => res));
-  }, []);
+  // const [display, setDiplay] = useState(() => null);
+  const value = useFetchData();
 
   return (
     <section>
-      { !display ? '...Loading' : (
+      { !value ? '...Loading' : (
         <div data-testid="output-data">
-          { display }
+          { value }
           {' '}
         </div>
       )}
