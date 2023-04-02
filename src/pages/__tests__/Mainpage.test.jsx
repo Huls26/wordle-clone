@@ -4,6 +4,10 @@ import {
 import {
   render, screen, waitFor, // logRoles,
 } from '@utils/test-utils';
+
+import server from '@mocks/server';
+import { rest } from 'msw';
+
 import Mainpage from '../Mainpage';
 
 describe('mainPage', () => {
@@ -45,5 +49,20 @@ describe('mainPage', () => {
         expect(displayElement).toHaveTextContent('Testing');
       });
     });
+  });
+});
+
+describe('error handling', async () => {
+  test('Handle error return value "Something went wrong"', async () => {
+    server.use(
+      rest.get(
+        'https://random-word-api.herokuapp.com/word',
+        (req, res, ctx) => res(ctx.status(500)),
+      ),
+    );
+    render(<Mainpage />);
+    const displayElement = await screen.findByTestId('output-data');
+    // console.log(screen.debug(displayElement));
+    expect(displayElement).toHaveTextContent('Something went wrong');
   });
 });
