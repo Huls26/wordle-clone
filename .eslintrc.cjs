@@ -34,7 +34,7 @@ module.exports = {
     'import/default': 0,
     'import/no-extraneous-dependencies': 0,
   },
-  ignorePatterns: ['test-utils.tsx'],
+  ignorePatterns: ['test-utils.tsx', 'setup.ts'],
   settings: {
     react: {
       version: 'detect',
