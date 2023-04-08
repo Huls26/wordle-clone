@@ -10,7 +10,7 @@ export default function BlockTable({ guessWord, targetWord }) {
 
   return (
     <section className="mb-6">
-      <div className="flex space-x-2 mb-2">
+      <div className="flex space-x-2 mb-2" data-testid="row-guess-container">
         {rowBlock}
       </div>
 
