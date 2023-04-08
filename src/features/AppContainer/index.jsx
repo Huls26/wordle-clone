@@ -4,7 +4,11 @@ import TitleBar from '@features/TitleBar';
 
 export default function AppContainer() {
   return (
-    <main>
+    <main className="
+              flex flex-col items-center text-center
+              mt-4
+    "
+    >
       <TitleBar />
       <BlockTable />
       <KeyBoard />
