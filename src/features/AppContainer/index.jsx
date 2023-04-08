@@ -7,10 +7,10 @@ export default function AppContainer() {
     <main className="
               flex flex-col items-center text-center
               mt-4
-    "
+            "
     >
       <TitleBar />
-      <BlockTable />
+      <BlockTable guessWord="water" targetWord="water" />
       <KeyBoard />
     </main>
   );

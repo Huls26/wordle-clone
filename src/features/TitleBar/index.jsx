@@ -1,6 +1,6 @@
 export default function TitleBar() {
   return (
-    <header>
+    <header className="mb-4">
       Wordle Clone
     </header>
   );
