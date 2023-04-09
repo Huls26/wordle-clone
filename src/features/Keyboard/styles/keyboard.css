@@ -1,0 +1,26 @@
+/*'gray-light': '#d3dce6' 
+  'dark-gray: #4a483e
+  'gray-light-2: #38372f
+*/
+
+.hg-theme-default {
+  background-color: transparent;
+}
+
+.hg-theme-default .hg-button {
+  background-color: #d3dce6;
+  height: 3em;
+  font-weight: 700; 
+  font-size: 1.1em;
+  color: #4a483e;
+  border-bottom: none;
+}
+
+.hg-theme-default .hg-button:hover {
+  opacity: 0.8;
+}
+
+.hg-theme-default .hg-button:active {
+  background-color: #d3dce6;
+  opacity: 0.6;
+}
