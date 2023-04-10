@@ -16,6 +16,16 @@ export default function KeyBoard() {
             '&#x2B05 Z X C V B N M Enter',
           ],
         }}
+        buttonTheme={[
+          {
+            class: 'bg-green',
+            buttons: 'W A R T E',
+          },
+          {
+            class: 'hg-highlight',
+            buttons: 'Q q',
+          },
+        ]}
       />
     </section>
   );

@@ -1,6 +1,7 @@
 /*'gray-light': '#d3dce6' 
   'dark-gray: #4a483e
   'gray-light-2: #38372f
+   green: '#13ce66',
 */
 
 .hg-theme-default {
@@ -23,4 +24,9 @@
 .hg-theme-default .hg-button:active {
   background-color: #d3dce6;
   opacity: 0.6;
+}
+
+.hg-theme-default .hg-rows .bg-green {
+  color: white;
+  background-color: #13ce66;
 }
