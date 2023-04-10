@@ -24,9 +24,9 @@ export default function TitleBar() {
 
   return (
     <header className="mb-8">
-      <div className="flex space-x-2">
+      <h1 className="flex space-x-2">
         { title }
-      </div>
+      </h1>
     </header>
   );
 }
