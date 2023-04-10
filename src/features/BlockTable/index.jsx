@@ -1,38 +1,31 @@
 import { PropTypes } from 'prop-types';
 import GuessBlock from './components/GuessBlock';
+import RowContainer from './components/RowContainer';
 
 export default function BlockTable({ guessWord, targetWord }) {
   const newArray = guessWord.split('');
-  // eslint-disable-next-line react/no-array-index-key
-  const rowBlock = newArray.map((letter, idx) => <GuessBlock key={idx} color="bg-green" guessLetter={letter} />);
-  // eslint-disable-next-line react/no-array-index-key
-  const guessTarget = targetWord.split('').map((letter, idx) => <GuessBlock key={idx} color="none" guessLetter="" />);
+  const len = targetWord.length;
+  const setRow = Array(len).fill({ letter: '', color: 'none' });
+  const setTableBlocks = Array(6).fill(setRow);
+
+  console.log(newArray);
+  console.log(targetWord);
+  function row(array) {
+    return array.map((guess, idx) => {
+      const { letter, color } = guess;
+      // eslint-disable-next-line react/no-array-index-key
+      return <GuessBlock key={idx} color={color} guessLetter={letter} />;
+    });
+  }
+
+  const tableBlocks = setTableBlocks.map((rowBlock, idx) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <RowContainer rowBlock={row(rowBlock)} key={idx} />
+  ));
 
   return (
     <section className="mb-6">
-      <div className="flex space-x-2 mb-2" data-testid="row-guess-container">
-        {rowBlock}
-      </div>
-
-      <div className="flex space-x-2 mb-2">
-        {guessTarget }
-      </div>
-
-      <div className="flex space-x-2 mb-2">
-        {guessTarget }
-      </div>
-
-      <div className="flex space-x-2 mb-2">
-        {guessTarget }
-      </div>
-
-      <div className="flex space-x-2 mb-2">
-        {guessTarget }
-      </div>
-
-      <div className="flex space-x-2 mb-2">
-        {guessTarget }
-      </div>
+      { tableBlocks }
     </section>
   );
 }

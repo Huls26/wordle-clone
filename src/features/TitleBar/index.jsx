@@ -2,18 +2,18 @@ import GuessBlock from '../BlockTable/components/GuessBlock';
 
 export default function TitleBar() {
   let title = [
-    { letter: 'W', bg: 'bg-gray-dark' },
-    { letter: 'O', bg: 'bg-green' },
-    { letter: 'R', bg: 'bg-yellow' },
-    { letter: 'D', bg: 'bg-gray-dark' },
-    { letter: 'L', bg: 'bg-gray-dark' },
-    { letter: 'E', bg: 'bg-yellow' },
+    { letter: 'W', bg: 'bg-gray-dark shadow-md' },
+    { letter: 'O', bg: 'bg-green shadow-md' },
+    { letter: 'R', bg: 'bg-yellow shadow-md' },
+    { letter: 'D', bg: 'bg-gray-dark shadow-md' },
+    { letter: 'L', bg: 'bg-gray-dark shadow-md' },
+    { letter: 'E', bg: 'bg-yellow shadow-md' },
     { letter: ' ', bg: '' },
-    { letter: 'C', bg: 'bg-green' },
-    { letter: 'L', bg: 'bg-gray-dark' },
-    { letter: 'O', bg: 'bg-yellow' },
-    { letter: 'N', bg: 'bg-green' },
-    { letter: 'E', bg: 'bg-gray-dark' },
+    { letter: 'C', bg: 'bg-green shadow-md' },
+    { letter: 'L', bg: 'bg-gray-dark shadow-md' },
+    { letter: 'O', bg: 'bg-yellow shadow-md' },
+    { letter: 'N', bg: 'bg-green shadow-md' },
+    { letter: 'E', bg: 'bg-gray-dark shadow-md' },
   ];
 
   title = title.map((object, idx) => {
