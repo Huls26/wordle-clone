@@ -13,13 +13,11 @@ export default function BlockTable({ guessWord, targetWord }) {
   function row(array) {
     return array.map((guess, idx) => {
       const { letter, color } = guess;
-      // eslint-disable-next-line react/no-array-index-key
       return <GuessBlock key={idx} color={color} guessLetter={letter} />;
     });
   }
 
   const tableBlocks = setTableBlocks.map((rowBlock, idx) => (
-    // eslint-disable-next-line react/no-array-index-key
     <RowContainer rowBlock={row(rowBlock)} key={idx} />
   ));
 

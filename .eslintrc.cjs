@@ -33,6 +33,7 @@ module.exports = {
     'import/extensions': 0,
     'import/default': 0,
     'import/no-extraneous-dependencies': 0,
+    'react/no-array-index-key': 0,
   },
   ignorePatterns: ['test-utils.tsx', 'setup.ts'],
   settings: {
