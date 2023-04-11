@@ -12,21 +12,21 @@ describe('BlockTable', () => {
       render(<BlockTable guessWord="water" targetWord="water" />);
     });
 
-    test('display row Block', () => {
-      const rowContainer = screen.getByTestId('row-guess-container');
+    test('display row Block', async () => {
+      const [rowContainer] = await screen.findAllByTestId('row-guess-container');
       expect(rowContainer).toBeInTheDocument();
     });
 
-    test('check if row block has child element of guess block', () => {
-      const rowContainer = screen.getByTestId('row-guess-container');
-      const [guessElement] = screen.getAllByTestId('guess-container');
+    test('check if row block has child element of guess block', async () => {
+      const [rowContainer] = await screen.findAllByTestId('row-guess-container');
+      const [guessElement] = within(rowContainer).getAllByTestId('guess-container');
       expect(rowContainer).toContainElement(guessElement);
     });
 
-    test('guess-container should 5 when the targetWord is "water"', () => {
-      const rowContainer = screen.getByTestId('row-guess-container');
-      const guessElements = within(rowContainer).getAllByTestId('guess-container');
-      expect(guessElements.length).toBe(5);
+    test('guess-container should 5 when the targetWord is "water"', async () => {
+      const [rowContainer] = await screen.findAllByTestId('row-guess-container');
+      const guessElement = within(rowContainer).getAllByTestId('guess-container');
+      expect(guessElement.length).toBe(5);
     });
   });
 });
