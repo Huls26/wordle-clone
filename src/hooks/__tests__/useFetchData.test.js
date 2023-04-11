@@ -10,7 +10,7 @@ describe('useFetchData', () => {
   describe('fetch data', () => {
     test('first render expect to be null', () => {
       const { result } = renderHook(() => useFetchData());
-      expect(result.current).toBeNull();
+      expect(result.current).toBe('');
     });
 
     test.skip('return value', async () => {

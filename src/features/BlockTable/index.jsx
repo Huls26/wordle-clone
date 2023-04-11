@@ -2,14 +2,9 @@ import { PropTypes } from 'prop-types';
 import GuessBlock from './components/GuessBlock';
 import RowContainer from './components/RowContainer';
 
-export default function BlockTable({ guessWord, targetWord }) {
-  const newArray = guessWord.split('');
-  const len = targetWord.length;
-  const setRow = Array(len).fill({ letter: '', color: 'none' });
-  const setTableBlocks = Array(6).fill(setRow);
-
-  console.log(newArray);
-  console.log(targetWord);
+export default function BlockTable({ blocksTable }) {
+  // render the guessblock
+  // this is a rowBlocks
   function row(array) {
     return array.map((guess, idx) => {
       const { letter, color } = guess;
@@ -17,7 +12,8 @@ export default function BlockTable({ guessWord, targetWord }) {
     });
   }
 
-  const tableBlocks = setTableBlocks.map((rowBlock, idx) => (
+  // render whole the block
+  const tableBlocks = blocksTable.map((rowBlock, idx) => (
     <RowContainer rowBlock={row(rowBlock)} key={idx} />
   ));
 
@@ -29,6 +25,8 @@ export default function BlockTable({ guessWord, targetWord }) {
 }
 
 BlockTable.propTypes = {
-  guessWord: PropTypes.string.isRequired,
-  targetWord: PropTypes.string.isRequired,
+  blocksTable: PropTypes.arrayOf(PropTypes.shape({
+    letter: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+  })).isRequired,
 };

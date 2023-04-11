@@ -1,19 +1,18 @@
+import useFetchData from '@hooks/useFetchData';
+
 import BlockTable from '@features/BlockTable';
 import KeyBoard from '@features/Keyboard';
 import TitleBar from '@features/TitleBar';
 
-import useFetchData from '@hooks/useFetchData';
-import { useEffect, useState } from 'react';
+import createBlockTable from './utils/createBlockTable';
 
 export default function AppContainer() {
   const data = useFetchData();
-  const [target, setTarget] = useState(() => '');
+  const len = data.length;
+  const array = createBlockTable(len);
 
-  useEffect(() => {
-    if (data) {
-      setTarget(() => data);
-    }
-  }, [data]);
+  console.log(len);
+  console.log(array);
 
   return (
     <main className="
@@ -22,7 +21,7 @@ export default function AppContainer() {
             "
     >
       <TitleBar />
-      <BlockTable guessWord="a" targetWord={target} />
+      { len ? <BlockTable blocksTable={array} /> : null }
       <KeyBoard />
     </main>
   );

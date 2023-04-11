@@ -4,12 +4,15 @@ import {
 import {
   render, screen, within, // logRoles,
 } from '@utils/test-utils';
+import createBlockTable from '@features/AppContainer/utils/createBlockTable';
 import BlockTable from '..';
 
 describe('BlockTable', () => {
   describe('display row Block', () => {
     beforeEach(() => {
-      render(<BlockTable guessWord="water" targetWord="water" />);
+      const len = 'water'.length;
+      const array = createBlockTable(len);
+      render(<BlockTable blocksTable={array} />);
     });
 
     test('display row Block', async () => {
@@ -27,6 +30,11 @@ describe('BlockTable', () => {
       const [rowContainer] = await screen.findAllByTestId('row-guess-container');
       const guessElement = within(rowContainer).getAllByTestId('guess-container');
       expect(guessElement.length).toBe(5);
+    });
+
+    test('rowBlock component should always be 6', async () => {
+      const rowContainer = await screen.findAllByTestId('row-guess-container');
+      expect(rowContainer.length).toBe(6);
     });
   });
 });
