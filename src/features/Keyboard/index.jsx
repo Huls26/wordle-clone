@@ -1,13 +1,15 @@
+import { PropTypes } from 'prop-types';
+
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import './styles/keyboard.css';
 
-export default function KeyBoard() {
+export default function KeyBoard({ onKeyPress }) {
   return (
     <section className="w-[40em] mb-6">
       <Keyboard
-        onChange=""
-        onKeyPress=""
+        // onChange={onChange}
+        onKeyPress={onKeyPress}
         theme="hg-theme-default hg-layout-default"
         layout={{
           default: [
@@ -25,8 +27,16 @@ export default function KeyBoard() {
             class: 'hg-highlight',
             buttons: 'Q q',
           },
+          {
+            class: 'button-active',
+            buttons: 'none',
+          },
         ]}
       />
     </section>
   );
 }
+
+KeyBoard.propTypes = {
+  onKeyPress: PropTypes.func.isRequired,
+};

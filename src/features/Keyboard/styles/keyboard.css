@@ -30,3 +30,8 @@
   color: white;
   background-color: #13ce66;
 }
+
+.hg-theme-default .button-active {
+  background-color: #d3dce6;
+  opacity: 0.6;
+}

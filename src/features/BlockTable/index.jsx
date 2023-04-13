@@ -25,8 +25,13 @@ export default function BlockTable({ blocksTable }) {
 }
 
 BlockTable.propTypes = {
-  blocksTable: PropTypes.arrayOf(PropTypes.shape({
-    letter: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  })).isRequired,
+  blocksTable: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        letter: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+  ).isRequired,
+
 };

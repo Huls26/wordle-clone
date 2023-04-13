@@ -17,6 +17,6 @@ export default async function fetchData(setData) {
       runCondition(data);
     }
   } catch (error) {
-    setData('Something went wrong');
+    setData('Bonus');
   }
 }

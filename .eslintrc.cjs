@@ -32,6 +32,7 @@ module.exports = {
     'linebreak-style': 0,
     'import/extensions': 0,
     'import/default': 0,
+    // to Check
     'import/no-extraneous-dependencies': 0,
     'react/no-array-index-key': 0,
   },
