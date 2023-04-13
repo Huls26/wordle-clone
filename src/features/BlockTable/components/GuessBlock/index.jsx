@@ -2,8 +2,10 @@ import { PropTypes } from 'prop-types';
 
 export default function GuessBlock({ guessLetter, color }) {
   const len = guessLetter.length;
-  const isGuess = len ? '' : 'border-4';
+  const isColor = color === 'none';
+  const isGuess = isColor ? 'border-4' : '';
   const isValidGuess = len <= 1 ? guessLetter : '';
+  const textColor = isColor ? 'text-gray-dark' : 'text-[#ffff]';
 
   return (
     <div
@@ -15,7 +17,7 @@ export default function GuessBlock({ guessLetter, color }) {
                   }
       data-testid="guess-container"
     >
-      <h1 className="font-bold text-3xl text-[#ffff] uppercase">{ isValidGuess }</h1>
+      <h1 className={`font-bold text-3xl ${textColor} uppercase`}>{ isValidGuess }</h1>
     </div>
   );
 }

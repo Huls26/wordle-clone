@@ -6,6 +6,9 @@ import KeyBoard from '@features/Keyboard';
 import TitleBar from '@features/TitleBar';
 
 import createBlockTable from './utils/createBlockTable';
+import checkGuessWord from './utils/checkGuessWord';
+import enterGuess from './utils/enterGuess';
+import enterBlockLetter from './utils/enterBlockLetter';
 
 export default function AppContainer() {
   const data = useFetchData();
@@ -18,34 +21,34 @@ export default function AppContainer() {
     setBlocksTable(() => array);
   }, [len]);
 
+  console.log(data);
+
   function onKeyPress(key) {
     const { row, column } = currentBlock;
-    setBlocksTable(() => {
-      const isValidLen = column < len;
-      if (isValidLen) {
-        const setNew = [...blocksTable];
-        const rowB = [...setNew[row]];
-        const setLetter = { letter: key, color: 'bg-green' };
-        rowB.splice(column, 1, setLetter);
-        setNew.splice(row, 1, rowB);
+    const isValidLen = column < len;
 
-        return setNew;
-      }
-
-      return blocksTable;
-    });
-    setCurrentBlock(() => {
-      const setNew = { ...currentBlock };
-      if (key === 'Enter') {
-        setNew.row += 1;
-        setNew.column = 0;
-      } else {
-        setNew.column += 1;
-        setNew.row = row;
-      }
-
-      return setNew;
-    });
+    if (key === 'Enter') {
+      enterGuess(
+        setBlocksTable,
+        setCurrentBlock,
+        blocksTable,
+        data,
+        checkGuessWord,
+        row,
+        currentBlock,
+      );
+    } else {
+      enterBlockLetter(
+        setBlocksTable,
+        setCurrentBlock,
+        isValidLen,
+        blocksTable,
+        currentBlock,
+        row,
+        column,
+        key,
+      );
+    }
   }
 
   function onKeyDown(event) {
