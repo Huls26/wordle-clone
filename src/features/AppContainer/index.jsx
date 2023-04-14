@@ -9,6 +9,7 @@ import createBlockTable from './utils/createBlockTable';
 import checkGuessWord from './utils/checkGuessWord';
 import enterGuess from './utils/enterGuess';
 import enterBlockLetter from './utils/enterBlockLetter';
+import deleteGuess from './utils/deleteGuess';
 
 export default function AppContainer() {
   const data = useFetchData();
@@ -26,8 +27,11 @@ export default function AppContainer() {
   function onKeyPress(key) {
     const { row, column } = currentBlock;
     const isValidLen = column < len;
+    const backspace = '&#x2B05';
 
-    if (key === 'Enter') {
+    if (key === backspace) {
+      deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
+    } else if (key === 'Enter') {
       enterGuess(
         setBlocksTable,
         setCurrentBlock,
@@ -52,7 +56,36 @@ export default function AppContainer() {
   }
 
   function onKeyDown(event) {
-    console.log(event.key);
+    const { key } = event;
+    const { row, column } = currentBlock;
+    const isValidLen = column < len;
+    const backspace = 'Backspace';
+
+    console.log(key);
+    if (key === backspace) {
+      deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
+    } else if (key === 'Enter') {
+      enterGuess(
+        setBlocksTable,
+        setCurrentBlock,
+        blocksTable,
+        data,
+        checkGuessWord,
+        row,
+        currentBlock,
+      );
+    } else {
+      enterBlockLetter(
+        setBlocksTable,
+        setCurrentBlock,
+        isValidLen,
+        blocksTable,
+        currentBlock,
+        row,
+        column,
+        key,
+      );
+    }
   }
 
   return (
