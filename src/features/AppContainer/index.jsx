@@ -25,13 +25,6 @@ export default function AppContainer() {
 
   // console.log(data);
 
-  function checkLength(Table, row) {
-    const block = Table[row];
-
-    return block.reduce((guessL, { letter }) => (letter ? [...guessL, letter] : [...guessL]), [])
-      .length;
-  }
-
   function onKeyPress(key) {
     const { row, column } = currentBlock;
     const isValidLen = column < len;
@@ -40,8 +33,6 @@ export default function AppContainer() {
     if (key === backspace) {
       deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
     } else if (key === 'Enter') {
-      checkLength(blocksTable, row);
-      // console.log(l === len);
       if (!isValidLen) {
         enterGuess(
           setBlocksTable,
@@ -54,8 +45,9 @@ export default function AppContainer() {
         );
       } else {
         setIsTooShort((prev) => !prev);
+        setTimeout(() => setIsTooShort((prev) => !prev), 5000);
       }
-    } else {
+    } else if (!isTooShort) {
       enterBlockLetter(
         setBlocksTable,
         setCurrentBlock,
@@ -112,13 +104,26 @@ export default function AppContainer() {
               flex flex-col items-center text-center
               mt-4
               outline-none
+              relative
             "
       onKeyDown={(event) => onKeyDown(event)}
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={-1}
     >
       <TitleBar />
-      {isTooShort && <section>Too short</section>}
+      {isTooShort && (
+        <section
+          className="
+          bg-orange px-20 py-8 opacity-90
+          text-[#eceef2ee] text-3xl font-bold
+            rounded-lg
+            absolute z-50
+            top-[6em]
+            "
+        >
+          Too short
+        </section>
+      )}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} />
     </main>

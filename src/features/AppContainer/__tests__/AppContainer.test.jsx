@@ -2,7 +2,7 @@ import {
   describe, test, expect, // beforeEach,
 } from 'vitest';
 import {
-  render, userEvent, screen, // within, // logRoles,
+  render, userEvent, screen, waitFor, // within, // logRoles,
 } from '@utils/test-utils';
 
 import AppContainer from '..';
@@ -21,7 +21,7 @@ describe('AppContainer', () => {
         const keyElement = container.querySelector('[data-skbtn="Q"]');
         await userEvent.click(keyElement);
 
-        const displayBlocksElement = getByRole('heading', { name: 'Q' });
+        const displayBlocksElement = getByRole('heading', { name: /q/i });
         expect(displayBlocksElement).toBeInTheDocument();
       });
 
@@ -81,6 +81,21 @@ describe('AppContainer', () => {
         const tooShortElement = getByText(/too short/i);
 
         expect(tooShortElement).toBeInTheDocument();
+      });
+
+      test('After 5 seconds modal "Too short" should be gone, when the length of the guess is not valid', async () => {
+        const { container, getByText } = render(<AppContainer />);
+        const keyElementQ = container.querySelector('[data-skbtn="Q"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementEnter);
+        const tooShortElement = getByText(/too short/i);
+
+        waitFor(
+          () => expect(tooShortElement).not.toBeInTheDocument(),
+          { timeout: 5000 },
+        );
       });
     });
   });
