@@ -16,13 +16,21 @@ export default function AppContainer() {
   const len = data.length;
   const [blocksTable, setBlocksTable] = useState(() => '');
   const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
+  const [isTooShort, setIsTooShort] = useState(() => false);
 
   useEffect(() => {
     const array = createBlockTable(len);
     setBlocksTable(() => array);
   }, [len]);
 
-  console.log(data);
+  // console.log(data);
+
+  function checkLength(Table, row) {
+    const block = Table[row];
+
+    return block.reduce((guessL, { letter }) => (letter ? [...guessL, letter] : [...guessL]), [])
+      .length;
+  }
 
   function onKeyPress(key) {
     const { row, column } = currentBlock;
@@ -32,15 +40,21 @@ export default function AppContainer() {
     if (key === backspace) {
       deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
     } else if (key === 'Enter') {
-      enterGuess(
-        setBlocksTable,
-        setCurrentBlock,
-        blocksTable,
-        data,
-        checkGuessWord,
-        row,
-        currentBlock,
-      );
+      checkLength(blocksTable, row);
+      // console.log(l === len);
+      if (!isValidLen) {
+        enterGuess(
+          setBlocksTable,
+          setCurrentBlock,
+          blocksTable,
+          data,
+          checkGuessWord,
+          row,
+          currentBlock,
+        );
+      } else {
+        setIsTooShort((prev) => !prev);
+      }
     } else {
       enterBlockLetter(
         setBlocksTable,
@@ -61,19 +75,22 @@ export default function AppContainer() {
     const isValidLen = column < len;
     const backspace = 'Backspace';
 
-    console.log(key);
     if (key === backspace) {
       deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
     } else if (key === 'Enter') {
-      enterGuess(
-        setBlocksTable,
-        setCurrentBlock,
-        blocksTable,
-        data,
-        checkGuessWord,
-        row,
-        currentBlock,
-      );
+      if (!isValidLen) {
+        enterGuess(
+          setBlocksTable,
+          setCurrentBlock,
+          blocksTable,
+          data,
+          checkGuessWord,
+          row,
+          currentBlock,
+        );
+      } else {
+        console.log('fix this you handsome');
+      }
     } else {
       enterBlockLetter(
         setBlocksTable,
@@ -101,6 +118,7 @@ export default function AppContainer() {
       tabIndex={-1}
     >
       <TitleBar />
+      {isTooShort && <section>Too short</section>}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} />
     </main>

@@ -51,5 +51,37 @@ describe('AppContainer', () => {
         expect(displayBlocksElementW).toBeInTheDocument();
       });
     });
+
+    describe('check guessRow length', () => {
+      test('when enter with valid guess length too short should not display', async () => {
+        const { container, queryByText } = render(<AppContainer />);
+        const keyElementQ = container.querySelector('[data-skbtn="Q"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+        const tooShortElement = queryByText(/too short/i);
+
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementQ);
+
+        await userEvent.click(keyElementEnter);
+        expect(tooShortElement).not.toBeInTheDocument();
+      });
+
+      test('length should be equal to the target word of the guessEntry block', async () => {
+        const { container, getByText } = render(<AppContainer />);
+        const keyElementQ = container.querySelector('[data-skbtn="Q"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        await userEvent.click(keyElementQ);
+        await userEvent.click(keyElementEnter);
+        const tooShortElement = getByText(/too short/i);
+
+        expect(tooShortElement).toBeInTheDocument();
+      });
+    });
   });
 });
