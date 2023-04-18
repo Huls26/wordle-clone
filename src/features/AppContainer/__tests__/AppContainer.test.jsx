@@ -38,17 +38,33 @@ describe('AppContainer', () => {
         expect(displayBlocksElementW).toBeInTheDocument();
       });
 
-      test('when keyboard', async () => {
+      test('guess value is "WATER" the bg-color of the keyboard should much the rowBlocks', async () => {
         const { container, getAllByRole } = render(<AppContainer />);
-        const keyElementQ = container.querySelector('[data-skbtn="Q"]');
         const keyElementW = container.querySelector('[data-skbtn="W"]');
-        await userEvent.click(keyElementQ);
-        await userEvent.click(keyElementW);
+        const keyElementA = container.querySelector('[data-skbtn="A"]');
+        const keyElementT = container.querySelector('[data-skbtn="T"]');
+        const keyElementE = container.querySelector('[data-skbtn="E"]');
+        const keyElementR = container.querySelector('[data-skbtn="R"]');
 
-        const [displayBlocksElementQ] = getAllByRole('heading', { name: 'Q' });
+        await userEvent.click(keyElementW);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementT);
+        await userEvent.click(keyElementE);
+        await userEvent.click(keyElementR);
+
         const [displayBlocksElementW] = getAllByRole('heading', { name: 'W' });
-        expect(displayBlocksElementQ).toBeInTheDocument();
+        const [displayBlocksElementA] = getAllByRole('heading', { name: 'A' });
+        const [displayBlocksElementT] = getAllByRole('heading', { name: 'T' });
+        const [displayBlocksElementE] = getAllByRole('heading', { name: 'E' });
+        const [displayBlocksElementR] = getAllByRole('heading', { name: 'R' });
+
         expect(displayBlocksElementW).toBeInTheDocument();
+        expect(displayBlocksElementA).toBeInTheDocument();
+        expect(displayBlocksElementT).toBeInTheDocument();
+        expect(displayBlocksElementE).toBeInTheDocument();
+        expect(displayBlocksElementR).toBeInTheDocument();
+
+        expect(container.querySelector('[data-skbtn="W"]')).toHaveClass('bg-gray-dark');
       });
     });
 

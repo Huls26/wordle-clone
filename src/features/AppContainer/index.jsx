@@ -10,6 +10,7 @@ import checkGuessWord from './utils/checkGuessWord';
 import enterGuess from './utils/enterGuess';
 import enterBlockLetter from './utils/enterBlockLetter';
 import deleteGuess from './utils/deleteGuess';
+import keySetIdentifier from './utils/keySetIdentifier';
 
 export default function AppContainer() {
   const data = useFetchData();
@@ -27,74 +28,49 @@ export default function AppContainer() {
 
   function onKeyPress(key) {
     const { row, column } = currentBlock;
-    const isValidLen = column < len;
-    const backspace = '&#x2B05';
 
-    if (key === backspace) {
-      deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
-    } else if (key === 'Enter') {
-      if (!isValidLen) {
-        enterGuess(
-          setBlocksTable,
-          setCurrentBlock,
-          blocksTable,
-          data,
-          checkGuessWord,
-          row,
-          currentBlock,
-        );
-      } else {
-        setIsTooShort((prev) => !prev);
-        setTimeout(() => setIsTooShort((prev) => !prev), 5000);
-      }
-    } else if (!isTooShort) {
-      enterBlockLetter(
-        setBlocksTable,
-        setCurrentBlock,
-        isValidLen,
-        blocksTable,
-        currentBlock,
-        row,
-        column,
-        key,
-      );
-    }
+    keySetIdentifier(
+      key,
+      len,
+      deleteGuess,
+      enterGuess,
+      setBlocksTable,
+      setCurrentBlock,
+      blocksTable,
+      data,
+      checkGuessWord,
+      currentBlock,
+      row,
+      column,
+      setIsTooShort,
+      isTooShort,
+      enterBlockLetter,
+    );
   }
 
   function onKeyDown(event) {
     const { key } = event;
     const { row, column } = currentBlock;
-    const isValidLen = column < len;
     const backspace = 'Backspace';
 
-    if (key === backspace) {
-      deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
-    } else if (key === 'Enter') {
-      if (!isValidLen) {
-        enterGuess(
-          setBlocksTable,
-          setCurrentBlock,
-          blocksTable,
-          data,
-          checkGuessWord,
-          row,
-          currentBlock,
-        );
-      } else {
-        console.log('fix this you handsome');
-      }
-    } else {
-      enterBlockLetter(
-        setBlocksTable,
-        setCurrentBlock,
-        isValidLen,
-        blocksTable,
-        currentBlock,
-        row,
-        column,
-        key,
-      );
-    }
+    keySetIdentifier(
+      key,
+      len,
+      deleteGuess,
+      enterGuess,
+      setBlocksTable,
+      setCurrentBlock,
+      blocksTable,
+      data,
+      checkGuessWord,
+      currentBlock,
+      row,
+      column,
+      setIsTooShort,
+      isTooShort,
+      enterBlockLetter,
+      backspace,
+    );
   }
 
   return (
@@ -125,7 +101,7 @@ export default function AppContainer() {
         </section>
       )}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
-      <KeyBoard onKeyPress={(event) => onKeyPress(event)} />
+      <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={{ bgGreen: '', bgDarkGray: 'W', bgYellow: 'T' }} />
     </main>
   );
 }

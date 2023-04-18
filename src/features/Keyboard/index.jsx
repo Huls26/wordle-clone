@@ -4,7 +4,9 @@ import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import './styles/keyboard.css';
 
-export default function KeyBoard({ onKeyPress }) {
+export default function KeyBoard({ onKeyPress, keysBg }) {
+  const { bgGreen, bgDarkGray, bgYellow } = keysBg;
+
   return (
     <section className="w-[40em] mb-6">
       <Keyboard
@@ -21,11 +23,15 @@ export default function KeyBoard({ onKeyPress }) {
         buttonTheme={[
           {
             class: 'bg-green',
-            buttons: 'W A R T E',
+            buttons: bgGreen,
           },
           {
-            class: 'hg-highlight',
-            buttons: 'Q q',
+            class: 'bg-gray-dark',
+            buttons: bgDarkGray,
+          },
+          {
+            class: 'bg-yellow',
+            buttons: bgYellow,
           },
           {
             class: 'button-active',
@@ -39,4 +45,9 @@ export default function KeyBoard({ onKeyPress }) {
 
 KeyBoard.propTypes = {
   onKeyPress: PropTypes.func.isRequired,
+  keysBg: PropTypes.shape({
+    bgGreen: PropTypes.string.isRequired,
+    bgDarkGray: PropTypes.string.isRequired,
+    bgYellow: PropTypes.string.isRequired,
+  }).isRequired,
 };

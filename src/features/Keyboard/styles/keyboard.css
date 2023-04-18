@@ -2,6 +2,8 @@
   'dark-gray: #4a483e
   'gray-light-2: #38372f
    green: '#13ce66',
+  'gray-dark': '#273444'
+   yellow: '#ffc82c'
 */
 
 .hg-theme-default {
@@ -29,6 +31,16 @@
 .hg-theme-default .hg-rows .bg-green {
   color: white;
   background-color: #13ce66;
+}
+
+.hg-theme-default .hg-rows .bg-gray-dark {
+  color: white;
+  background-color: #273444;
+}
+
+.hg-theme-default .hg-rows .bg-yellow {
+  color: white;
+  background-color: #ffc82c;
 }
 
 .hg-theme-default .button-active {
