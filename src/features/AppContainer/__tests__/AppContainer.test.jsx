@@ -64,7 +64,7 @@ describe('AppContainer', () => {
         expect(displayBlocksElementE).toBeInTheDocument();
         expect(displayBlocksElementR).toBeInTheDocument();
 
-        expect(container.querySelector('[data-skbtn="W"]')).toHaveClass('bg-gray-dark');
+        waitFor(() => expect(container.querySelector('[data-skbtn="W"]')).toHaveClass('bg-gray-dark'));
       });
     });
 

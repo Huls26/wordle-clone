@@ -3,14 +3,13 @@ function enterGuess(
   setCurrentBlock,
   blocksTable,
   target,
-  checkGuessWord,
   row,
   currentBlock,
+  newBlocks,
 ) {
   setBlocksTable(() => {
     const setNew = [...blocksTable];
-    const blocksTableRow = blocksTable[row];
-    const setNewBlock = checkGuessWord(target, blocksTableRow);
+    const setNewBlock = newBlocks;
     setNew.splice(row, 1, setNewBlock);
 
     return setNew;

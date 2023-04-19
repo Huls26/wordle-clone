@@ -5,7 +5,7 @@ import 'react-simple-keyboard/build/css/index.css';
 import './styles/keyboard.css';
 
 export default function KeyBoard({ onKeyPress, keysBg }) {
-  const { bgGreen, bgDarkGray, bgYellow } = keysBg;
+  const { bgGreen, bgGrayDark, bgYellow } = keysBg;
 
   return (
     <section className="w-[40em] mb-6">
@@ -23,15 +23,15 @@ export default function KeyBoard({ onKeyPress, keysBg }) {
         buttonTheme={[
           {
             class: 'bg-green',
-            buttons: bgGreen,
+            buttons: bgGreen || 'none',
           },
           {
             class: 'bg-gray-dark',
-            buttons: bgDarkGray,
+            buttons: bgGrayDark || 'none',
           },
           {
             class: 'bg-yellow',
-            buttons: bgYellow,
+            buttons: bgYellow || 'none',
           },
           {
             class: 'button-active',
@@ -47,7 +47,7 @@ KeyBoard.propTypes = {
   onKeyPress: PropTypes.func.isRequired,
   keysBg: PropTypes.shape({
     bgGreen: PropTypes.string.isRequired,
-    bgDarkGray: PropTypes.string.isRequired,
+    bgGrayDark: PropTypes.string.isRequired,
     bgYellow: PropTypes.string.isRequired,
   }).isRequired,
 };

@@ -15,62 +15,73 @@ import keySetIdentifier from './utils/keySetIdentifier';
 export default function AppContainer() {
   const data = useFetchData();
   const len = data.length;
+  const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
   const [blocksTable, setBlocksTable] = useState(() => '');
   const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
   const [isTooShort, setIsTooShort] = useState(() => false);
+  const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
 
+  // setKeyboardLetterBg
   useEffect(() => {
     const array = createBlockTable(len);
     setBlocksTable(() => array);
   }, [len]);
 
-  // console.log(data);
-
   function onKeyPress(key) {
     const { row, column } = currentBlock;
+    const backspace = '&#x2B05';
+    const notGameOver = row <= 5;
 
-    keySetIdentifier(
-      key,
-      len,
-      deleteGuess,
-      enterGuess,
-      setBlocksTable,
-      setCurrentBlock,
-      blocksTable,
-      data,
-      checkGuessWord,
-      currentBlock,
-      row,
-      column,
-      setIsTooShort,
-      isTooShort,
-      enterBlockLetter,
-    );
+    if (notGameOver) {
+      keySetIdentifier(
+        key,
+        len,
+        deleteGuess,
+        enterGuess,
+        setBlocksTable,
+        setCurrentBlock,
+        blocksTable,
+        data,
+        checkGuessWord,
+        currentBlock,
+        row,
+        column,
+        setIsTooShort,
+        isTooShort,
+        enterBlockLetter,
+        backspace,
+        setKeyboardLetterBg,
+      );
+    }
   }
 
   function onKeyDown(event) {
     const { key } = event;
     const { row, column } = currentBlock;
     const backspace = 'Backspace';
+    const gameOver = row <= 5;
 
-    keySetIdentifier(
-      key,
-      len,
-      deleteGuess,
-      enterGuess,
-      setBlocksTable,
-      setCurrentBlock,
-      blocksTable,
-      data,
-      checkGuessWord,
-      currentBlock,
-      row,
-      column,
-      setIsTooShort,
-      isTooShort,
-      enterBlockLetter,
-      backspace,
-    );
+    if (gameOver) {
+      keySetIdentifier(
+        key,
+        len,
+        deleteGuess,
+        enterGuess,
+        setBlocksTable,
+        setCurrentBlock,
+        blocksTable,
+        data,
+        checkGuessWord,
+        currentBlock,
+        row,
+        column,
+        setIsTooShort,
+        isTooShort,
+        enterBlockLetter,
+        backspace,
+        setKeyboardLetterBg,
+      );
+    }
   }
 
   return (
@@ -101,7 +112,7 @@ export default function AppContainer() {
         </section>
       )}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
-      <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={{ bgGreen: '', bgDarkGray: 'W', bgYellow: 'T' }} />
+      <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>
   );
 }

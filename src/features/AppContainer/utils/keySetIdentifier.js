@@ -1,3 +1,5 @@
+import collectLetterBg from './collectLetterBg';
+
 export default function keySetIdentifier(
   key,
   len,
@@ -14,29 +16,27 @@ export default function keySetIdentifier(
   setIsTooShort,
   isTooShort,
   enterBlockLetter,
-  backspaceFor = '&#x2B05',
+  backspaceFor,
+  setKeyboardLetterBg,
 ) {
   const isValidLen = column < len;
   const backspace = backspaceFor;
-
-  function checkBgLetter() {
-    console.log(blocksTable);
-  }
 
   if (key === backspace) {
     deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
   } else if (key === 'Enter') {
     if (!isValidLen) {
-      checkBgLetter();
+      const mapBlocks = checkGuessWord(data, blocksTable[row]);
       enterGuess(
         setBlocksTable,
         setCurrentBlock,
         blocksTable,
         data,
-        checkGuessWord,
         row,
         currentBlock,
+        mapBlocks,
       );
+      setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
     } else {
       setIsTooShort((prev) => !prev);
       setTimeout(() => setIsTooShort((prev) => !prev), 5000);

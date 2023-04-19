@@ -33,14 +33,15 @@
   background-color: #13ce66;
 }
 
-.hg-theme-default .hg-rows .bg-gray-dark {
-  color: white;
-  background-color: #273444;
-}
 
 .hg-theme-default .hg-rows .bg-yellow {
   color: white;
   background-color: #ffc82c;
+}
+
+.hg-theme-default .hg-rows .bg-gray-dark {
+  color: white;
+  background-color: #273444;
 }
 
 .hg-theme-default .button-active {
