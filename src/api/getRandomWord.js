@@ -14,6 +14,7 @@ export default async function fetchData(setData) {
     const [data] = await res.json();
 
     if (data) {
+      // console.log('Hi Jo');
       runCondition(data);
     }
   } catch (error) {

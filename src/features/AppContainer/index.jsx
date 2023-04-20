@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import useFetchData from '@hooks/useFetchData';
-// mport useDictionaryThenRun from '@hooks/useDictionaryThenRun';
 
 import BlockTable from '@features/BlockTable';
 import KeyBoard from '@features/Keyboard';
 import TitleBar from '@features/TitleBar';
+
+import TooShort from './components/TooShort';
 
 import createBlockTable from './utils/createBlockTable';
 import checkGuessWord from './utils/checkGuessWord';
@@ -21,17 +22,16 @@ export default function AppContainer() {
   const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
   const [isTooShort, setIsTooShort] = useState(() => false);
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
+  // const [is, setIs] = useState(() => ({ validWord: null, gameOver: false }));
 
+  // console.log(currentBlock.row > 5);
   // setKeyboardLetterBg
   useEffect(() => {
     const array = createBlockTable(len);
     setBlocksTable(() => array);
   }, [len]);
 
-  // const validWord = useDictionaryThenRun('hello', () => 'run something');
-
-  // console.log(validWord);
-
+  console.log(data);
   function RunKeyIndentifier(key, row, column, backspace) {
     keySetIdentifier(
       key,
@@ -53,11 +53,13 @@ export default function AppContainer() {
       setKeyboardLetterBg,
     );
   }
+
   function onKeyPress(key) {
     const { row, column } = currentBlock;
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
+    console.log(key);
     if (notGameOver) {
       RunKeyIndentifier(key, row, column, backspace);
     }
@@ -68,9 +70,18 @@ export default function AppContainer() {
     const { row, column } = currentBlock;
     const backspace = 'Backspace';
     const gameOver = row <= 5;
+    let newKey = '';
+
+    if (key === 'Enter') {
+      newKey = 'Enter';
+    } else if (key === backspace) {
+      newKey = backspace;
+    } else {
+      newKey = key.toUpperCase();
+    }
 
     if (gameOver) {
-      RunKeyIndentifier(key, row, column, backspace);
+      RunKeyIndentifier(newKey, row, column, backspace);
     }
   }
 
@@ -88,19 +99,7 @@ export default function AppContainer() {
       tabIndex={-1}
     >
       <TitleBar />
-      {isTooShort && (
-        <section
-          className="
-          bg-orange px-20 py-8 opacity-90
-          text-[#eceef2ee] text-3xl font-bold
-            rounded-lg
-            absolute z-50
-            top-[6em]
-            "
-        >
-          Too short
-        </section>
-      )}
+      {isTooShort && <TooShort />}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>

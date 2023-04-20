@@ -12,6 +12,7 @@ export default function checkGuessWord(targetWord, guessWord) {
     }
 
     if (letter === split[idx]) {
+      console.log(block);
       newBlock.color = 'bg-green';
     }
 

@@ -28,12 +28,6 @@
   opacity: 0.6;
 }
 
-.hg-theme-default .hg-rows .bg-green {
-  color: white;
-  background-color: #13ce66;
-}
-
-
 .hg-theme-default .hg-rows .bg-yellow {
   color: white;
   background-color: #ffc82c;
@@ -44,6 +38,10 @@
   background-color: #273444;
 }
 
+.hg-theme-default .hg-rows .bg-green {
+  color: white;
+  background-color: #13ce66;
+}
 .hg-theme-default .button-active {
   background-color: #d3dce6;
   opacity: 0.6;

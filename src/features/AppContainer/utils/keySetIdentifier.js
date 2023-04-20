@@ -29,6 +29,7 @@ export default function keySetIdentifier(
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
+      console.log(mapBlocks);
 
       fetchDictionaryThenRun(mapWord, () => enterGuess(
         setBlocksTable,
@@ -39,16 +40,6 @@ export default function keySetIdentifier(
         currentBlock,
         mapBlocks,
       )).then((isValid) => console.log(isValid));
-      console.log(mapWord);
-      // enterGuess(
-      //   setBlocksTable,
-      //   setCurrentBlock,
-      //   blocksTable,
-      //   data,
-      //   row,
-      //   currentBlock,
-      //   mapBlocks,
-      // );
       setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
     } else {
       setIsTooShort((prev) => !prev);
