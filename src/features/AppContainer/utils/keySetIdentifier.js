@@ -1,4 +1,5 @@
 import collectLetterBg from './collectLetterBg';
+import fetchDictionaryThenRun from './fetchDictionaryThenRun';
 
 export default function keySetIdentifier(
   key,
@@ -27,7 +28,9 @@ export default function keySetIdentifier(
   } else if (key === 'Enter') {
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
-      enterGuess(
+      const mapWord = mapBlocks.map(({ letter }) => letter).join('');
+
+      fetchDictionaryThenRun(mapWord, () => enterGuess(
         setBlocksTable,
         setCurrentBlock,
         blocksTable,
@@ -35,7 +38,17 @@ export default function keySetIdentifier(
         row,
         currentBlock,
         mapBlocks,
-      );
+      )).then((isValid) => console.log(isValid));
+      console.log(mapWord);
+      // enterGuess(
+      //   setBlocksTable,
+      //   setCurrentBlock,
+      //   blocksTable,
+      //   data,
+      //   row,
+      //   currentBlock,
+      //   mapBlocks,
+      // );
       setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
     } else {
       setIsTooShort((prev) => !prev);

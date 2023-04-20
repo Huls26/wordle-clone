@@ -46,8 +46,8 @@ export default function KeyBoard({ onKeyPress, keysBg }) {
 KeyBoard.propTypes = {
   onKeyPress: PropTypes.func.isRequired,
   keysBg: PropTypes.shape({
-    bgGreen: PropTypes.string.isRequired,
-    bgGrayDark: PropTypes.string.isRequired,
-    bgYellow: PropTypes.string.isRequired,
+    bgGreen: PropTypes.string,
+    bgGrayDark: PropTypes.string,
+    bgYellow: PropTypes.string,
   }).isRequired,
 };

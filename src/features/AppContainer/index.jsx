@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useFetchData from '@hooks/useFetchData';
+// mport useDictionaryThenRun from '@hooks/useDictionaryThenRun';
 
 import BlockTable from '@features/BlockTable';
 import KeyBoard from '@features/Keyboard';
@@ -27,31 +28,38 @@ export default function AppContainer() {
     setBlocksTable(() => array);
   }, [len]);
 
+  // const validWord = useDictionaryThenRun('hello', () => 'run something');
+
+  // console.log(validWord);
+
+  function RunKeyIndentifier(key, row, column, backspace) {
+    keySetIdentifier(
+      key,
+      len,
+      deleteGuess,
+      enterGuess,
+      setBlocksTable,
+      setCurrentBlock,
+      blocksTable,
+      data,
+      checkGuessWord,
+      currentBlock,
+      row,
+      column,
+      setIsTooShort,
+      isTooShort,
+      enterBlockLetter,
+      backspace,
+      setKeyboardLetterBg,
+    );
+  }
   function onKeyPress(key) {
     const { row, column } = currentBlock;
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
     if (notGameOver) {
-      keySetIdentifier(
-        key,
-        len,
-        deleteGuess,
-        enterGuess,
-        setBlocksTable,
-        setCurrentBlock,
-        blocksTable,
-        data,
-        checkGuessWord,
-        currentBlock,
-        row,
-        column,
-        setIsTooShort,
-        isTooShort,
-        enterBlockLetter,
-        backspace,
-        setKeyboardLetterBg,
-      );
+      RunKeyIndentifier(key, row, column, backspace);
     }
   }
 
@@ -62,25 +70,7 @@ export default function AppContainer() {
     const gameOver = row <= 5;
 
     if (gameOver) {
-      keySetIdentifier(
-        key,
-        len,
-        deleteGuess,
-        enterGuess,
-        setBlocksTable,
-        setCurrentBlock,
-        blocksTable,
-        data,
-        checkGuessWord,
-        currentBlock,
-        row,
-        column,
-        setIsTooShort,
-        isTooShort,
-        enterBlockLetter,
-        backspace,
-        setKeyboardLetterBg,
-      );
+      RunKeyIndentifier(key, row, column, backspace);
     }
   }
 
