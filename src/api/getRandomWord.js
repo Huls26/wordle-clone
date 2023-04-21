@@ -1,3 +1,5 @@
+import fetchDictionaryThenRun from '@features/AppContainer/utils/fetchDictionaryThenRun';
+
 export default async function fetchData(setData) {
   const minimumValue = 5;
   const maxValue = 8;
@@ -14,8 +16,8 @@ export default async function fetchData(setData) {
     const [data] = await res.json();
 
     if (data) {
-      // console.log('Hi Jo');
-      runCondition(data);
+      fetchDictionaryThenRun(data, () => runCondition(data))
+        .then((inDictionary) => (!inDictionary && fetchData(setData)));
     }
   } catch (error) {
     setData('Bonus');

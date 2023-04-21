@@ -59,7 +59,6 @@ export default function AppContainer() {
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
-    console.log(key);
     if (notGameOver) {
       RunKeyIndentifier(key, row, column, backspace);
     }

@@ -10,6 +10,6 @@ export default async function fetchDictionaryThenRun(toCheck, callback) {
     }
     return isArray;
   } catch (error) {
-    throw Error(error.message);
+    throw new Error(error.message);
   }
 }

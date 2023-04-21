@@ -7,10 +7,20 @@ const handlers = [
       'Testing',
     ]),
   )),
-  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/:word', (req, res, ctx) => res(
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/TESTING', (req, res, ctx) => res(
     ctx.status(200),
     ctx.json([
-      [{ title: 'hello' }],
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/WATER', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
     ]),
   )),
 ];

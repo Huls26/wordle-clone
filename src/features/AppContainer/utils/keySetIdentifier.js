@@ -29,18 +29,21 @@ export default function keySetIdentifier(
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
-      console.log(mapBlocks);
 
-      fetchDictionaryThenRun(mapWord, () => enterGuess(
-        setBlocksTable,
-        setCurrentBlock,
-        blocksTable,
-        data,
-        row,
-        currentBlock,
-        mapBlocks,
-      )).then((isValid) => console.log(isValid));
-      setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
+      console.log(mapWord);
+      fetchDictionaryThenRun(mapWord, () => {
+        enterGuess(
+          setBlocksTable,
+          setCurrentBlock,
+          blocksTable,
+          data,
+          row,
+          currentBlock,
+          mapBlocks,
+        );
+        setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
+      });
+      //  .then((isValid) => console.log(isValid));
     } else {
       setIsTooShort((prev) => !prev);
       setTimeout(() => setIsTooShort((prev) => !prev), 5000);
