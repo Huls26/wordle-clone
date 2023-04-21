@@ -5,7 +5,7 @@ import BlockTable from '@features/BlockTable';
 import KeyBoard from '@features/Keyboard';
 import TitleBar from '@features/TitleBar';
 
-import TooShort from './components/TooShort';
+import DisplayWarning from './components/DisplayWarning';
 
 import createBlockTable from './utils/createBlockTable';
 import checkGuessWord from './utils/checkGuessWord';
@@ -22,7 +22,7 @@ export default function AppContainer() {
   const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
   const [isTooShort, setIsTooShort] = useState(() => false);
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
-  // const [is, setIs] = useState(() => ({ validWord: null, gameOver: false }));
+  const [is, setIs] = useState(() => ({ validWord: true, gameOver: false }));
 
   // console.log(currentBlock.row > 5);
   // setKeyboardLetterBg
@@ -51,6 +51,7 @@ export default function AppContainer() {
       enterBlockLetter,
       backspace,
       setKeyboardLetterBg,
+      setIs,
     );
   }
 
@@ -98,7 +99,8 @@ export default function AppContainer() {
       tabIndex={-1}
     >
       <TitleBar />
-      {isTooShort && <TooShort />}
+      { isTooShort && <DisplayWarning bg="bg-orange" text="Too short" /> }
+      { !is.validWord && <DisplayWarning bg="bg-orange" text="Invalid word" />}
       { len ? <BlockTable blocksTable={blocksTable} /> : null }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>

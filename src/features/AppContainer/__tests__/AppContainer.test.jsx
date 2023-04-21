@@ -117,7 +117,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementEnter);
 
         const tooShortElement = getByText('Too short');
-
         expect(tooShortElement).toBeInTheDocument();
       });
 
@@ -133,6 +132,68 @@ describe('AppContainer', () => {
 
         waitFor(
           () => expect(tooShortElement).not.toBeInTheDocument(),
+          { timeout: 5000 },
+        );
+      });
+    });
+
+    describe('invalid word enter', () => {
+      test('display "Invalid word" when enter random and gibberish word', async () => {
+        const { container, getByText } = render(<AppContainer />);
+        const keyElementH = container.querySelector('[data-skbtn="H"]');
+        const keyElementI = container.querySelector('[data-skbtn="I"]');
+        const keyElementX = container.querySelector('[data-skbtn="X"]');
+        const keyElementJ = container.querySelector('[data-skbtn="J"]');
+        const keyElementO = container.querySelector('[data-skbtn="O"]');
+        const keyElementF = container.querySelector('[data-skbtn="F"]');
+        const keyElementZ = container.querySelector('[data-skbtn="Z"]');
+
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        await userEvent.click(keyElementH);
+        await userEvent.click(keyElementI);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementF);
+        await userEvent.click(keyElementZ);
+        await userEvent.click(keyElementEnter);
+
+        waitFor(
+          () => {
+            const invalidElement = getByText('Invalid word');
+            expect(invalidElement).toBeInTheDocument();
+          },
+          { timeout: 5000 },
+        );
+      });
+
+      test('after 5 seconds "Invalid word" remove', async () => {
+        const { container, getByText } = render(<AppContainer />);
+        const keyElementH = container.querySelector('[data-skbtn="H"]');
+        const keyElementI = container.querySelector('[data-skbtn="I"]');
+        const keyElementX = container.querySelector('[data-skbtn="X"]');
+        const keyElementJ = container.querySelector('[data-skbtn="J"]');
+        const keyElementO = container.querySelector('[data-skbtn="O"]');
+        const keyElementF = container.querySelector('[data-skbtn="F"]');
+        const keyElementZ = container.querySelector('[data-skbtn="Z"]');
+
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        await userEvent.click(keyElementH);
+        await userEvent.click(keyElementI);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementF);
+        await userEvent.click(keyElementZ);
+        await userEvent.click(keyElementEnter);
+
+        waitFor(
+          () => {
+            const invalidElement = getByText(/invalid word/i);
+            expect(invalidElement).not.toBeInTheDocument();
+          },
           { timeout: 5000 },
         );
       });

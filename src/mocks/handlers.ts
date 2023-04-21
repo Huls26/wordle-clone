@@ -23,6 +23,14 @@ const handlers = [
       }],
     ]),
   )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/HIXJOFZ', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
 ];
 
 export default handlers;

@@ -19,6 +19,7 @@ export default function keySetIdentifier(
   enterBlockLetter,
   backspaceFor,
   setKeyboardLetterBg,
+  setIs,
 ) {
   const isValidLen = column < len;
   const backspace = backspaceFor;
@@ -30,7 +31,6 @@ export default function keySetIdentifier(
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
 
-      console.log(mapWord);
       fetchDictionaryThenRun(mapWord, () => {
         enterGuess(
           setBlocksTable,
@@ -42,8 +42,19 @@ export default function keySetIdentifier(
           mapBlocks,
         );
         setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
-      });
-      //  .then((isValid) => console.log(isValid));
+      })
+        .then((isValid) => {
+          if (!isValid) {
+            setIs((prevValue) => ({
+              ...prevValue,
+              validWord: isValid,
+            }));
+            setTimeout(() => setIs((prevValue) => ({
+              ...prevValue,
+              validWord: !prevValue.validWord,
+            })), 5000);
+          }
+        });
     } else {
       setIsTooShort((prev) => !prev);
       setTimeout(() => setIsTooShort((prev) => !prev), 5000);
