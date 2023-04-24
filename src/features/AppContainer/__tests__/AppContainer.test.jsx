@@ -198,5 +198,110 @@ describe('AppContainer', () => {
         );
       });
     });
+
+    describe('GameOver', () => {
+      test('when you guess the word "Congratulation and play again should display"', async () => {
+        const { container, getByRole } = render(<AppContainer />);
+        const keyElementT = container.querySelector('[data-skbtn="T"]');
+        const keyElementE = container.querySelector('[data-skbtn="E"]');
+        const keyElementS = container.querySelector('[data-skbtn="S"]');
+        const keyElementI = container.querySelector('[data-skbtn="I"]');
+        const keyElementN = container.querySelector('[data-skbtn="N"]');
+        const keyElementG = container.querySelector('[data-skbtn="G"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        await userEvent.click(keyElementT);
+        await userEvent.click(keyElementE);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementT);
+        await userEvent.click(keyElementI);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementG);
+        await userEvent.click(keyElementEnter);
+
+        waitFor(() => {
+          const gameOverElement = getByRole('article');
+          expect(gameOverElement).toBeInTheDocument();
+        }, { timeout: 5000 });
+      });
+
+      test.skip('Display Game Over', async () => {
+        const { container, getByRole } = render(<AppContainer />);
+        const keyElementJ = container.querySelector('[data-skbtn="J"]');
+        const keyElementX = container.querySelector('[data-skbtn="X"]');
+        const keyElementO = container.querySelector('[data-skbtn="O"]');
+        const keyElementS = container.querySelector('[data-skbtn="S"]');
+        const keyElementA = container.querySelector('[data-skbtn="A"]');
+        const keyElementK = container.querySelector('[data-skbtn="K"]');
+        const keyElementN = container.querySelector('[data-skbtn="N"]');
+
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+
+        // first row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        // second row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        // third row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        // forth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        // fifth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        // sixth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementK);
+        await userEvent.click(keyElementN);
+        await userEvent.click(keyElementEnter);
+
+        waitFor(() => {
+          const gameOverElement = getByRole('heading', { name: /game over the word is testing/i });
+          expect(gameOverElement).toBeInTheDocument();
+        }, { timeout: 5000 });
+      });
+    });
   });
 });

@@ -11,6 +11,7 @@ export default async function fetchData(setData) {
       setData(data);
     }
   }
+
   try {
     const res = await fetch('https://random-word-api.herokuapp.com/word');
     const [data] = await res.json();

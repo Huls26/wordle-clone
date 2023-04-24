@@ -20,16 +20,27 @@ export default function keySetIdentifier(
   backspaceFor,
   setKeyboardLetterBg,
   setIs,
+  is,
 ) {
   const isValidLen = column < len;
   const backspace = backspaceFor;
 
   if (key === backspace) {
     deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
-  } else if (key === 'Enter') {
+  } else if (key === 'Enter' && !is.gameOver) {
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
+      const isGuessed = data === mapWord.toLowerCase();
+      const upperCase = data.toUpperCase();
+
+      if (isGuessed) {
+        setIs((prevValue) => ({
+          ...prevValue,
+          gameOver: true,
+          text: 'Congratulations you guessed the word!',
+        }));
+      }
 
       fetchDictionaryThenRun(mapWord, () => {
         enterGuess(
@@ -53,13 +64,19 @@ export default function keySetIdentifier(
               ...prevValue,
               validWord: !prevValue.validWord,
             })), 5000);
+          } else if (row >= 5 && !isGuessed) {
+            setIs((prevValue) => ({
+              ...prevValue,
+              gameOver: true,
+              text: `GAME OVER The word is "${upperCase}"`,
+            }));
           }
         });
     } else {
       setIsTooShort((prev) => !prev);
       setTimeout(() => setIsTooShort((prev) => !prev), 5000);
     }
-  } else if (!isTooShort) {
+  } else if (!isTooShort && !is.gameOver) {
     enterBlockLetter(
       setBlocksTable,
       setCurrentBlock,

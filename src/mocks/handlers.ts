@@ -7,6 +7,14 @@ const handlers = [
       'Testing',
     ]),
   )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/Testing', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
   rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/TESTING', (req, res, ctx) => res(
     ctx.status(200),
     ctx.json([
@@ -24,6 +32,14 @@ const handlers = [
     ]),
   )),
   rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/HIXJOFZ', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      {
+        title: 'Testing',
+      },
+    ]),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/JXOSAKN', (req, res, ctx) => res(
     ctx.status(200),
     ctx.json([
       [{
