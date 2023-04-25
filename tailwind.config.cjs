@@ -21,6 +21,10 @@ module.exports = {
       'gray-dark': '#273444',
       gray: '#8492a6',
       'gray-light': '#d3dce6',
+      'gray-200': '#d3dcd',
+      sky: {
+        500: '#0ea5e9',
+      },
 
     },
     extend: {},

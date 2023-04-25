@@ -7,6 +7,7 @@ import TitleBar from '@features/TitleBar';
 
 import DisplayWarning from './components/DisplayWarning';
 import GameOver from './components/GameOver';
+import SkeletonTailwind from './components/SkeletonTailwind';
 
 import createBlockTable from './utils/createBlockTable';
 import checkGuessWord from './utils/checkGuessWord';
@@ -25,14 +26,11 @@ export default function AppContainer() {
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
 
-  // console.log(currentBlock.row > 5);
-  // setKeyboardLetterBg
   useEffect(() => {
     const array = createBlockTable(len);
     setBlocksTable(() => array);
   }, [len]);
 
-  // console.log(data);
   function RunKeyIndentifier(key, row, column, backspace) {
     keySetIdentifier(
       key,
@@ -67,6 +65,7 @@ export default function AppContainer() {
     }
   }
 
+  console.log(data);
   function onKeyDown(event) {
     const { key } = event;
     const { row, column } = currentBlock;
@@ -91,7 +90,6 @@ export default function AppContainer() {
     window.location.reload(false);
   }
 
-  console.log(data);
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <main
@@ -106,10 +104,11 @@ export default function AppContainer() {
       tabIndex={-1}
     >
       <TitleBar />
-      { is.gameOver && <GameOver playAgain={() => playAgainBtn()} text={is.text} /> }
-      { isTooShort && <DisplayWarning bg="bg-orange" text="Too short" /> }
-      { !is.validWord && <DisplayWarning bg="bg-orange" text="Invalid word" />}
-      { len ? <BlockTable blocksTable={blocksTable} /> : null }
+      <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len)} />
+      <GameOver playAgain={() => playAgainBtn()} text={is.text} isDisplay={Boolean(is.gameOver)} />
+      <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
+      <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
+      { len ? <BlockTable blocksTable={blocksTable} /> : <SkeletonTailwind /> }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>
   );
