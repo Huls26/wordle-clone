@@ -2,11 +2,11 @@ import { PropTypes } from 'prop-types';
 
 export default function DisplayWarning({ bg, text, isDisplay }) {
   const styles = `
-    ${bg} px-10 py-4 md:px-20 md:py-8 opacity-90
-    text-[#eceef2ee] text-base md:text-3xl font-bold
+    ${bg} px-10 py-4 md:px-13 md:py-[1em] lg:px-20 md:py-9 opacity-90
+    text-[#eceef2ee] text-base md:text-2xl lg:text-3xl font-bold
     rounded-lg
     absolute z-50
-    top-[6em]
+    top-[8em] md:top-[6em]
     animate-bounce
     `;
   const display = isDisplay ? (

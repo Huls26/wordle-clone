@@ -18,7 +18,7 @@ export default function BlockTable({ blocksTable }) {
   ));
 
   return (
-    <section className="mb-2 md:mb-6">
+    <section className="mb-2 md:mb-3 lg:mb-6">
       { tableBlocks }
     </section>
   );

@@ -65,7 +65,6 @@ export default function AppContainer() {
     }
   }
 
-  console.log(data);
   function onKeyDown(event) {
     const { key } = event;
     const { row, column } = currentBlock;
@@ -100,6 +99,7 @@ export default function AppContainer() {
               mt-4
               outline-none
               relative
+              min-w-[260px]
             "
       onKeyDown={(event) => onKeyDown(event)}
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex

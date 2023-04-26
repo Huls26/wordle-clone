@@ -8,9 +8,8 @@ export default function KeyBoard({ onKeyPress, keysBg }) {
   const { bgGreen, bgGrayDark, bgYellow } = keysBg;
 
   return (
-    <section className="min-w-2/3 md:w-[40em] mb-6">
+    <section className="w-[18em] md:w-[35em] lg:w-[40em] mb-6">
       <Keyboard
-        // onChange={onChange}
         onKeyPress={onKeyPress}
         theme="hg-theme-default hg-layout-default"
         layout={{

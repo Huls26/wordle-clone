@@ -13,12 +13,13 @@ export default function GuessBlock({ guessLetter, color }) {
                     `${color} flex justify-center items-center 
                       w-7 h-7 rounded
                       ${isGuess} border-gray-light
-                      md:w-14 md:h-14
+                      md:w-11 md:h-11
+                      lg:w-14 lg:h-14
                       `
                   }
       data-testid="guess-container"
     >
-      <h1 className={`font-bold text-base md:text-3xl ${textColor} uppercase`}>{ isValidGuess }</h1>
+      <h1 className={`font-bold text-base md:text-2xl lg:text-3xl ${textColor} uppercase`}>{ isValidGuess }</h1>
     </div>
   );
 }

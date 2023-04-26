@@ -4,11 +4,16 @@ export default function GameOver({ playAgain, text, isDisplay }) {
   function display() {
     const components = (
       <article className="
-         bg-purple px-3 py-3 md:px-20 md:py-8
-         text-[#eceef2ee] text-sm md:text-3xl font-bold
+         bg-purple px-3 py-3
+          md:px-[2em] md:py-4
+          lg:px-20 lg:py-8
+         text-[#eceef2ee] text-sm font-bold
+          md:text-2xl
+          lg:text-3xl
           rounded-lg
           absolute z-50
           top-[6em]
+          md:top-[5em]
     "
       >
         <h1 className="mb-3 md:mb-6 drop-shadow-lg cursor-pointer ">
@@ -17,7 +22,7 @@ export default function GameOver({ playAgain, text, isDisplay }) {
         <button
           className="
           text-[.8em]
-          md:text-lg
+          lg:text-lg
           bg-blue
           px-2
           md:px-4
