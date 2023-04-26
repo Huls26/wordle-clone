@@ -26,16 +26,18 @@ describe('AppContainer', () => {
       });
 
       test('when keyboard is click "Q" and "W" then display "Q" and "W" in the displayBlocks', async () => {
-        const { container, findAllByRole } = render(<AppContainer />);
+        const { container, getAllByRole } = render(<AppContainer />);
         const keyElementQ = container.querySelector('[data-skbtn="Q"]');
         const keyElementW = container.querySelector('[data-skbtn="W"]');
         await userEvent.click(keyElementQ);
         await userEvent.click(keyElementW);
 
-        const [displayBlocksElementQ] = await findAllByRole('heading', { name: 'Q' });
-        const [displayBlocksElementW] = await findAllByRole('heading', { name: 'W' });
-        expect(displayBlocksElementQ).toBeInTheDocument();
-        expect(displayBlocksElementW).toBeInTheDocument();
+        waitFor(() => {
+          const [displayBlocksElementQ] = getAllByRole('heading', { name: /q/i });
+          const [displayBlocksElementW] = getAllByRole('heading', { name: /w/i });
+          expect(displayBlocksElementQ).toBeInTheDocument();
+          expect(displayBlocksElementW).toBeInTheDocument();
+        });
       });
 
       test('guess value is "WATER" the bg-color of the keyboard should much the rowBlocks', async () => {

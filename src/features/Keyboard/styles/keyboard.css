@@ -12,11 +12,22 @@
 
 .hg-theme-default .hg-button {
   background-color: #d3dce6;
-  height: 3em;
+  height: 1.5em;
   font-weight: 700; 
-  font-size: 1.1em;
+  font-size: .6em;
   color: #4a483e;
   border-bottom: none;
+}
+
+@media only screen and (min-width: 760px) {
+  .hg-theme-default .hg-button {
+    background-color: #d3dce6;
+    height: 3em;
+    font-weight: 700; 
+    font-size: 1.1em;
+    color: #4a483e;
+    border-bottom: none;
+  }
 }
 
 .hg-theme-default .hg-button:hover {

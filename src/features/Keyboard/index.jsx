@@ -8,7 +8,7 @@ export default function KeyBoard({ onKeyPress, keysBg }) {
   const { bgGreen, bgGrayDark, bgYellow } = keysBg;
 
   return (
-    <section className="w-[40em] mb-6">
+    <section className="min-w-2/3 md:w-[40em] mb-6">
       <Keyboard
         // onChange={onChange}
         onKeyPress={onKeyPress}
