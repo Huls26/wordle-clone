@@ -90,7 +90,7 @@ export default function AppContainer() {
   }
 
   // check when internet is not available
-
+  console.log(data);
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <main

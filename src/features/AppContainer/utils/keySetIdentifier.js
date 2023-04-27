@@ -25,7 +25,7 @@ export default function keySetIdentifier(
   const isValidLen = column < len;
   const backspace = backspaceFor;
 
-  if (key === backspace) {
+  if (key === backspace && is.validWord) {
     deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
   } else if (key === 'Enter' && !is.gameOver) {
     if (!isValidLen) {
