@@ -89,8 +89,6 @@ export default function AppContainer() {
     window.location.reload(false);
   }
 
-  // check when internet is not available
-  console.log(data);
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <main

@@ -1,9 +1,12 @@
 {
+  "homepage": "https://Huls26.github.io/wordle-clone",
   "name": "wordle-clone",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "tsc && vite build",
     "coverage": "vitest run --coverage",
     "dev": "vite",
@@ -38,6 +41,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-vitest": "^0.0.54",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "jsdom": "^21.1.1",
     "lint-staged": "^13.2.0",
