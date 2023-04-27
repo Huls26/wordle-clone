@@ -9,6 +9,7 @@ import path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/wordle-clone/',
   plugins: [react(), eslint()],
   test: {
     globals: true,
