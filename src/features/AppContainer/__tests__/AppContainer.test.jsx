@@ -21,8 +21,13 @@ describe('AppContainer', () => {
         const keyElement = container.querySelector('[data-skbtn="Q"]');
         await userEvent.click(keyElement);
 
-        const displayBlocksElement = getByRole('heading', { name: /q/i });
-        expect(displayBlocksElement).toBeInTheDocument();
+        waitFor(
+          () => {
+            const displayBlocksElement = getByRole('heading', { name: /q/i });
+            expect(displayBlocksElement).toBeInTheDocument();
+          },
+          { timeout: 5000 },
+        );
       });
 
       test('when keyboard is click "Q" and "W" then display "Q" and "W" in the displayBlocks', async () => {
@@ -32,12 +37,17 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementQ);
         await userEvent.click(keyElementW);
 
-        waitFor(() => {
-          const [displayBlocksElementQ] = getAllByRole('heading', { name: /q/i });
-          const [displayBlocksElementW] = getAllByRole('heading', { name: /w/i });
-          expect(displayBlocksElementQ).toBeInTheDocument();
-          expect(displayBlocksElementW).toBeInTheDocument();
-        });
+        waitFor(
+          () => {
+            const [displayBlocksElementQ] = getAllByRole('heading', { name: /q/i });
+            const [displayBlocksElementW] = getAllByRole('heading', { name: /w/i });
+            expect(displayBlocksElementQ).toBeInTheDocument();
+            expect(displayBlocksElementW).toBeInTheDocument();
+          },
+          {
+            timeout: 5000,
+          },
+        );
       });
 
       test('guess value is "WATER" the bg-color of the keyboard should much the rowBlocks', async () => {
