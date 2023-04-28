@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 export default function GuessBlock({ guessLetter, color }) {
   const len = guessLetter.length;
   const isColor = color === 'none';
-  const isGuess = isColor ? 'border-[3px] md:border-4' : '';
+  const isGuess = isColor ? 'border-4' : '';
   const isValidGuess = len <= 1 ? guessLetter : '';
   const textColor = isColor ? 'text-gray-dark' : 'text-[#ffff]';
 
