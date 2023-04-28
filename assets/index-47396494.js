@@ -42,7 +42,7 @@ Error generating stack: `+u.message+`
                       ${i} border-gray-light
                       w-11 h-11
                       lg:w-14 lg:h-14
-                      `,"data-testid":"guess-container",children:he("h1",{className:`font-bold text-base md:text-2xl lg:text-3xl ${d} uppercase`,children:u})})}Go.propTypes={guessLetter:Ie.PropTypes.string.isRequired,color:Ie.PropTypes.string.isRequired};function Xc({rowBlock:e}){return he("div",{className:`flex space-x-1\r
+                      `,"data-testid":"guess-container",children:he("h1",{className:`font-bold text-2xl lg:text-3xl ${d} uppercase`,children:u})})}Go.propTypes={guessLetter:Ie.PropTypes.string.isRequired,color:Ie.PropTypes.string.isRequired};function Xc({rowBlock:e}){return he("div",{className:`flex space-x-1\r
       lg:space-x-2\r
       mb-1 lg:mb-2`,"data-testid":"row-guess-container",children:e})}Xc.propTypes={rowBlock:Ie.array.isRequired};function Zc({blocksTable:e}){function t(r){return r.map((i,u)=>{const{letter:d,color:g}=i;return he(Go,{color:g,guessLetter:d},u)})}const n=e.map((r,i)=>he(Xc,{rowBlock:t(r)},i));return he("section",{className:"mb-2 md:mb-3 lg:mb-6",children:n})}Zc.propTypes={blocksTable:Ie.PropTypes.arrayOf(Ie.PropTypes.arrayOf(Ie.PropTypes.shape({letter:Ie.PropTypes.string.isRequired,color:Ie.PropTypes.string.isRequired})).isRequired).isRequired};var Du={},bp={get exports(){return Du},set exports(e){Du=e}};/*!
  * 
