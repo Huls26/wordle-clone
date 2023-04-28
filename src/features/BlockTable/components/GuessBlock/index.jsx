@@ -19,7 +19,7 @@ export default function GuessBlock({ guessLetter, color }) {
                   }
       data-testid="guess-container"
     >
-      <h1 className={`font-bold text-base md:text-2xl lg:text-3xl ${textColor} uppercase`}>{ isValidGuess }</h1>
+      <h1 className={`font-bold text-2xl lg:text-3xl ${textColor} uppercase`}>{ isValidGuess }</h1>
     </div>
   );
 }
