@@ -30,7 +30,7 @@ export default function TitleBar() {
     return <GuessBlock key={idx} guessLetter={letter} color={bg} />;
   });
   return (
-    <header className="mb-3 md:mb-5 lg:mb-8 flex flex-col justify-center md:flex-row md:space-x-10">
+    <header className="mb-5 lg:mb-8 flex flex-col justify-center md:flex-row md:space-x-10">
       <h1 className="flex space-x-1 mb-1 md:space-x-2">
         { titleWordle }
       </h1>

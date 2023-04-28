@@ -11,9 +11,9 @@ export default function GuessBlock({ guessLetter, color }) {
     <div
       className={
                     `${color} flex justify-center items-center 
-                      w-7 h-7 rounded
+                      rounded
                       ${isGuess} border-gray-light
-                      md:w-11 md:h-11
+                      w-11 h-11
                       lg:w-14 lg:h-14
                       `
                   }
