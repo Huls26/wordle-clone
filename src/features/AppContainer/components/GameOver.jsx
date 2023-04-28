@@ -7,7 +7,7 @@ export default function GameOver({ playAgain, text, isDisplay }) {
          bg-purple px-3 py-3
           md:px-[2em] md:py-4
           lg:px-20 lg:py-8
-         text-[#eceef2ee] text-sm font-bold
+         text-[#eceef2ee] text-2xl font-bold
           md:text-2xl
           lg:text-3xl
           rounded-lg
@@ -21,10 +21,10 @@ export default function GameOver({ playAgain, text, isDisplay }) {
         </h1>
         <button
           className="
-          text-[.8em]
-          lg:text-lg
+          text-lg
           bg-blue
-          px-2
+          px-4
+          py-1
           md:px-4
           md:py-1
           rounded-md

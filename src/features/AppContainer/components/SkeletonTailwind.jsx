@@ -3,7 +3,7 @@ export default function SkeletonTailwind() {
     <div role="status" className="animate-pulse flex justify-center">
       <div className="
               flex items-center justify-center
-              w-[15em] h-[10em]
+              w-[23em] h-[20em]
               md:w-[33em] md:h-[27em]
               bg-gray-light rounded dark:bg-gray
               mb-2 md:mb-4
