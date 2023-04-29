@@ -60,7 +60,7 @@ export default function AppContainer() {
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
-    if (notGameOver) {
+    if (notGameOver && !isTooShort && is.validWord) {
       RunKeyIndentifier(key, row, column, backspace);
     }
   }
@@ -69,7 +69,7 @@ export default function AppContainer() {
     const { key } = event;
     const { row, column } = currentBlock;
     const backspace = 'Backspace';
-    const gameOver = row <= 5;
+    const notGameOver = row <= 5;
     let newKey = '';
 
     if (key === 'Enter') {
@@ -80,7 +80,7 @@ export default function AppContainer() {
       newKey = key.toUpperCase();
     }
 
-    if (gameOver) {
+    if (notGameOver && !isTooShort && is.validWord) {
       RunKeyIndentifier(newKey, row, column, backspace);
     }
   }
