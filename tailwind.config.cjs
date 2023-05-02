@@ -12,6 +12,7 @@ module.exports = {
       xl: '1440px',
     },
     colors: {
+      red: '#ef4444',
       blue: '#1fb6ff',
       purple: '#7e5bef',
       pink: '#ff49db',
@@ -25,7 +26,6 @@ module.exports = {
       sky: {
         500: '#0ea5e9',
       },
-
     },
     extend: {},
   },
