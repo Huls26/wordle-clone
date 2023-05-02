@@ -15,6 +15,7 @@ import enterGuess from './utils/enterGuess';
 import enterBlockLetter from './utils/enterBlockLetter';
 import deleteGuess from './utils/deleteGuess';
 import keySetIdentifier from './utils/keySetIdentifier';
+import NavLevel from './components/NavLevel';
 
 export default function AppContainer() {
   const data = useFetchData();
@@ -108,6 +109,7 @@ export default function AppContainer() {
       <GameOver playAgain={() => playAgainBtn()} text={is.text} isDisplay={Boolean(is.gameOver)} />
       <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
       <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
+      <NavLevel />
       { len ? <BlockTable blocksTable={blocksTable} /> : <SkeletonTailwind /> }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>
