@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import useFetchData from '@hooks/useFetchData';
 
 import BlockTable from '@features/BlockTable';
@@ -8,6 +8,7 @@ import TitleBar from '@features/TitleBar';
 import DisplayWarning from './components/DisplayWarning';
 import GameOver from './components/GameOver';
 import SkeletonTailwind from './components/SkeletonTailwind';
+import NavLevel from './components/NavLevel';
 
 import createBlockTable from './utils/createBlockTable';
 import checkGuessWord from './utils/checkGuessWord';
@@ -15,7 +16,7 @@ import enterGuess from './utils/enterGuess';
 import enterBlockLetter from './utils/enterBlockLetter';
 import deleteGuess from './utils/deleteGuess';
 import keySetIdentifier from './utils/keySetIdentifier';
-import NavLevel from './components/NavLevel';
+import { reducerMethod, INITIAL_STATE } from './utils/levelReducer';
 
 export default function AppContainer() {
   const data = useFetchData();
@@ -26,6 +27,7 @@ export default function AppContainer() {
   const [isTooShort, setIsTooShort] = useState(() => false);
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
+  const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
 
   useEffect(() => {
     const array = createBlockTable(len);
@@ -53,9 +55,11 @@ export default function AppContainer() {
       setKeyboardLetterBg,
       setIs,
       is,
+      dispatch,
     );
   }
 
+  console.log(data);
   function onKeyPress(key) {
     const { row, column } = currentBlock;
     const backspace = '&#x2B05';
@@ -106,10 +110,11 @@ export default function AppContainer() {
     >
       <TitleBar />
       <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len)} />
+      <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
       <GameOver playAgain={() => playAgainBtn()} text={is.text} isDisplay={Boolean(is.gameOver)} />
       <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
       <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
-      <NavLevel />
+      <NavLevel correctGuesses={state.correctGuesses} wrongGuesses={state.wrongGuesses} />
       { len ? <BlockTable blocksTable={blocksTable} /> : <SkeletonTailwind /> }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
     </main>

@@ -50,7 +50,7 @@ describe('AppContainer', () => {
         );
       });
 
-      test('guess value is "WATER" the bg-color of the keyboard should much the rowBlocks', async () => {
+      test('guess value is "WATER" the bg-color of the keyboard should match the rowBlocks', async () => {
         const { container, findAllByRole } = render(<AppContainer />);
         const keyElementW = container.querySelector('[data-skbtn="W"]');
         const keyElementA = container.querySelector('[data-skbtn="A"]');
@@ -312,6 +312,18 @@ describe('AppContainer', () => {
         waitFor(() => {
           const gameOverElement = getByRole('heading', { name: /game over the word is testing/i });
           expect(gameOverElement).toBeInTheDocument();
+        }, { timeout: 5000 });
+      });
+    });
+
+    describe('level, correct, and wrong guess display', () => {
+      test('displays stars, cross, and level', () => {
+        const { container } = <AppContainer />;
+
+        waitFor(() => {
+          const correctElement = container.querySelector('#root > main > section:nth-child(2) > div:nth-child(1) > svg:nth-child(1)');
+
+          expect(correctElement).toBeVisible();
         }, { timeout: 5000 });
       });
     });

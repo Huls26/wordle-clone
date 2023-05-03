@@ -21,6 +21,7 @@ export default function keySetIdentifier(
   setKeyboardLetterBg,
   setIs,
   is,
+  dispatch,
 ) {
   const isValidLen = column < len;
   const backspace = backspaceFor;
@@ -35,11 +36,9 @@ export default function keySetIdentifier(
       const upperCase = data.toUpperCase();
 
       if (isGuessed) {
-        setIs((prevValue) => ({
-          ...prevValue,
-          gameOver: true,
-          text: 'Congratulations you guessed the word!',
-        }));
+        // fix display when correct guessed and when wrong !!!
+        dispatch({ type: 'CORRECT_GUESSED' });
+        setTimeout(() => dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'correctGuessed' }), 3000);
       }
 
       fetchDictionaryThenRun(mapWord, () => {
@@ -67,9 +66,9 @@ export default function keySetIdentifier(
           } else if (row >= 5 && !isGuessed) {
             setIs((prevValue) => ({
               ...prevValue,
-              gameOver: true,
               text: `GAME OVER The word is "${upperCase}"`,
             }));
+            dispatch({ type: 'WRONG_GUESSED' });
           }
         });
     } else {
