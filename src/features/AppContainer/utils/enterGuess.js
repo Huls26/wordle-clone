@@ -2,7 +2,6 @@ function enterGuess(
   setBlocksTable,
   setCurrentBlock,
   blocksTable,
-  target,
   row,
   currentBlock,
   newBlocks,

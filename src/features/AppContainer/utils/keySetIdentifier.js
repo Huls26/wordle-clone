@@ -1,22 +1,22 @@
 import collectLetterBg from './collectLetterBg';
 import fetchDictionaryThenRun from './fetchDictionaryThenRun';
+import deleteGuess from './deleteGuess';
+import enterGuess from './enterGuess';
+import checkGuessWord from './checkGuessWord';
+import enterBlockLetter from './enterBlockLetter';
 
 export default function keySetIdentifier(
   key,
   len,
-  deleteGuess,
-  enterGuess,
   setBlocksTable,
   setCurrentBlock,
   blocksTable,
   data,
-  checkGuessWord,
   currentBlock,
   row,
   column,
   setIsTooShort,
   isTooShort,
-  enterBlockLetter,
   backspaceFor,
   setKeyboardLetterBg,
   setIs,
@@ -33,7 +33,7 @@ export default function keySetIdentifier(
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
       const isGuessed = data === mapWord.toLowerCase();
-      const upperCase = data.toUpperCase();
+      // const upperCase = data.toUpperCase();
 
       if (isGuessed) {
         // fix display when correct guessed and when wrong !!!
@@ -41,18 +41,21 @@ export default function keySetIdentifier(
         setTimeout(() => dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'correctGuessed' }), 3000);
       }
 
-      fetchDictionaryThenRun(mapWord, () => {
-        enterGuess(
-          setBlocksTable,
-          setCurrentBlock,
-          blocksTable,
-          data,
-          row,
-          currentBlock,
-          mapBlocks,
-        );
-        setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
-      })
+      fetchDictionaryThenRun(
+        mapWord,
+        () => {
+          enterGuess(
+            setBlocksTable,
+            setCurrentBlock,
+            blocksTable,
+            row,
+            currentBlock,
+            mapBlocks,
+          );
+          setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
+        },
+        () => dispatch({ type: 'ERROR_HANDLING' }),
+      )
         .then((isValid) => {
           if (!isValid) {
             setIs((prevValue) => ({
@@ -64,11 +67,12 @@ export default function keySetIdentifier(
               validWord: !prevValue.validWord,
             })), 5000);
           } else if (row >= 5 && !isGuessed) {
-            setIs((prevValue) => ({
-              ...prevValue,
-              text: `GAME OVER The word is "${upperCase}"`,
-            }));
+            // setIs((prevValue) => ({
+            //   ...prevValue,
+            //   text: `GAME OVER The word is "${upperCase}"`,
+            // }));
             dispatch({ type: 'WRONG_GUESSED' });
+            setTimeout(() => dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'wrongGuessed' }), 3000);
           }
         });
     } else {

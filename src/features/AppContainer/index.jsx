@@ -11,16 +11,11 @@ import SkeletonTailwind from './components/SkeletonTailwind';
 import NavLevel from './components/NavLevel';
 
 import createBlockTable from './utils/createBlockTable';
-import checkGuessWord from './utils/checkGuessWord';
-import enterGuess from './utils/enterGuess';
-import enterBlockLetter from './utils/enterBlockLetter';
-import deleteGuess from './utils/deleteGuess';
 import keySetIdentifier from './utils/keySetIdentifier';
-import { reducerMethod, INITIAL_STATE } from './utils/levelReducer';
+
+import reducerMethod, { INITIAL_STATE } from './utils/levelReducer';
 
 export default function AppContainer() {
-  const data = useFetchData();
-  const len = data.length;
   const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
   const [blocksTable, setBlocksTable] = useState(() => '');
   const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
@@ -28,7 +23,11 @@ export default function AppContainer() {
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
+  const data = useFetchData(state.level, 0);
+  console.log(data);
+  const len = data.length;
 
+  console.log(state.level);
   useEffect(() => {
     const array = createBlockTable(len);
     setBlocksTable(() => array);
@@ -38,19 +37,15 @@ export default function AppContainer() {
     keySetIdentifier(
       key,
       len,
-      deleteGuess,
-      enterGuess,
       setBlocksTable,
       setCurrentBlock,
       blocksTable,
       data,
-      checkGuessWord,
       currentBlock,
       row,
       column,
       setIsTooShort,
       isTooShort,
-      enterBlockLetter,
       backspace,
       setKeyboardLetterBg,
       setIs,
@@ -108,15 +103,23 @@ export default function AppContainer() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={-1}
     >
-      <TitleBar />
       <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len)} />
       <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
+      <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${data.toUpperCase()}"`} isDisplay={state.wrongGuessed} />
       <GameOver playAgain={() => playAgainBtn()} text={is.text} isDisplay={Boolean(is.gameOver)} />
       <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
       <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
-      <NavLevel correctGuesses={state.correctGuesses} wrongGuesses={state.wrongGuesses} />
+
+      <TitleBar />
+      <NavLevel
+        correctGuesses={state.correctGuesses}
+        wrongGuesses={state.wrongGuesses}
+        level={state.level}
+      />
       { len ? <BlockTable blocksTable={blocksTable} /> : <SkeletonTailwind /> }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
+
+      <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling} />
     </main>
   );
 }
