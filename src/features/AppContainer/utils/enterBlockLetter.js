@@ -7,6 +7,7 @@ export default function enterBlockLetter(
   row,
   column,
   key,
+  dispatch,
 ) {
   const upKey = key.toUpperCase().charCodeAt(0) - 64;
   const validKeys = upKey >= 1 && upKey <= 26;
@@ -25,13 +26,14 @@ export default function enterBlockLetter(
 
       return blocksTable;
     });
-    setCurrentBlock(() => {
-      const setNew = { ...currentBlock };
+    // setCurrentBlock(() => {
+    //   const setNew = { ...currentBlock };
 
-      setNew.column += isValidLen ? 1 : 0;
-      setNew.row = row;
+    //   setNew.column += isValidLen ? 1 : 0;
+    //   setNew.row = row;
 
-      return setNew;
-    });
+    //   return setNew;
+    // });
+    dispatch({ type: 'CURRENT_BLOCK_SET_POSITION', isValid: isValidLen });
   }
 }

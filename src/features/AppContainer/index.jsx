@@ -23,16 +23,24 @@ export default function AppContainer() {
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
-  const data = useFetchData(state.level, 0);
-  console.log(data);
-  const len = data.length;
+  const data = useFetchData(state.level);
+  const wordData = data[state.currentWord];
+  const len = wordData.length;
 
-  console.log(state.level);
   useEffect(() => {
-    const array = createBlockTable(len);
+    const array = createBlockTable(wordData.length);
     setBlocksTable(() => array);
-  }, [len]);
+  }, [wordData]);
 
+  // useEffect(() => {
+  //   const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
+
+  //   console.log(isGameOver);
+  // }, [state]);
+
+  console.log(wordData);
+  console.log(currentBlock);
+  console.log(state.correctGuessed);
   function RunKeyIndentifier(key, row, column, backspace) {
     keySetIdentifier(
       key,
@@ -40,8 +48,8 @@ export default function AppContainer() {
       setBlocksTable,
       setCurrentBlock,
       blocksTable,
-      data,
-      currentBlock,
+      wordData,
+      state.currentBlock,
       row,
       column,
       setIsTooShort,
@@ -54,9 +62,8 @@ export default function AppContainer() {
     );
   }
 
-  console.log(data);
   function onKeyPress(key) {
-    const { row, column } = currentBlock;
+    const { row, column } = state.currentBlock;
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
@@ -67,7 +74,7 @@ export default function AppContainer() {
 
   function onKeyDown(event) {
     const { key } = event;
-    const { row, column } = currentBlock;
+    const { row, column } = state.currentBlock;
     const backspace = 'Backspace';
     const notGameOver = row <= 5;
     let newKey = '';
@@ -105,8 +112,12 @@ export default function AppContainer() {
     >
       <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len)} />
       <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
-      <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${data.toUpperCase()}"`} isDisplay={state.wrongGuessed} />
-      <GameOver playAgain={() => playAgainBtn()} text={is.text} isDisplay={Boolean(is.gameOver)} />
+      <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${wordData.toUpperCase()}"`} isDisplay={state.wrongGuessed} />
+      <GameOver
+        playAgain={() => playAgainBtn()}
+        text={state.gameOverText}
+        isDisplay={state.gameOver}
+      />
       <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
       <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
 

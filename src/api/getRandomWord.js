@@ -28,7 +28,7 @@ export default async function fetchData(setData, level) {
     const res = await fetch(GET);
     const data = await res.json();
 
-    console.log(data);
+    // console.log(data);
     if (data) {
       // fetchDictionaryThenRun(data, () => runCondition(data))
       //   .then((inDictionary) => (!inDictionary && fetchData(setData)));

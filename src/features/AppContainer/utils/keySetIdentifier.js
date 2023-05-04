@@ -27,7 +27,7 @@ export default function keySetIdentifier(
   const backspace = backspaceFor;
 
   if (key === backspace && is.validWord) {
-    deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column);
+    deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column, dispatch);
   } else if (key === 'Enter' && !is.gameOver) {
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, blocksTable[row]);
@@ -38,7 +38,14 @@ export default function keySetIdentifier(
       if (isGuessed) {
         // fix display when correct guessed and when wrong !!!
         dispatch({ type: 'CORRECT_GUESSED' });
-        setTimeout(() => dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'correctGuessed' }), 3000);
+        setTimeout(
+          () => {
+            dispatch({ type: 'CHANGE_CURRENT_WORD' });
+            dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'correctGuessed' });
+            dispatch({ type: 'CURRENT_BLOCK_RESET_POSITION' });
+          },
+          3000,
+        );
       }
 
       fetchDictionaryThenRun(
@@ -65,14 +72,20 @@ export default function keySetIdentifier(
             setTimeout(() => setIs((prevValue) => ({
               ...prevValue,
               validWord: !prevValue.validWord,
-            })), 5000);
+            })), 3000);
           } else if (row >= 5 && !isGuessed) {
             // setIs((prevValue) => ({
             //   ...prevValue,
             //   text: `GAME OVER The word is "${upperCase}"`,
             // }));
             dispatch({ type: 'WRONG_GUESSED' });
-            setTimeout(() => dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'wrongGuessed' }), 3000);
+            setTimeout(
+              () => {
+                dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'wrongGuessed' });
+                dispatch({ type: 'CHANGE_CURRENT_WORD' });
+              },
+              5000,
+            );
           }
         });
     } else {
@@ -89,6 +102,7 @@ export default function keySetIdentifier(
       row,
       column,
       key,
+      dispatch,
     );
   }
 }

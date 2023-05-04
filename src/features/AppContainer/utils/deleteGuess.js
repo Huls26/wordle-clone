@@ -5,6 +5,7 @@ export default function deleteGuess(
   currentBlock,
   row,
   column,
+  dispatch,
 ) {
   const isValidRow = column > 0;
   if (isValidRow) {
@@ -17,13 +18,14 @@ export default function deleteGuess(
 
       return setNew;
     });
-    setCurrentBlock(() => {
-      const setNew = { ...currentBlock };
+    // setCurrentBlock(() => {
+    //   const setNew = { ...currentBlock };
 
-      setNew.column -= isValidRow ? 1 : 0;
-      setNew.row = row;
+    //   setNew.column -= isValidRow ? 1 : 0;
+    //   setNew.row = row;
 
-      return setNew;
-    });
+    //   return setNew;
+    // });
+    dispatch({ type: 'CURRENT_BLOCK_SET_POSITION', isValid: isValidRow, condition: 'DELETE' });
   }
 }
