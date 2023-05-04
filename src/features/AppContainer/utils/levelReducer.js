@@ -9,10 +9,63 @@ export const INITIAL_STATE = {
   gameOver: false,
   gameOverText: '',
   currentBlock: { row: 0, column: 0 },
+  blocksTable: '',
 };
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'ENTER_GUESS_SET_BLOCKSTABLE': {
+      // blocks table
+      const { row } = state.currentBlock;
+      const setNew = [...state.blocksTable];
+      const setNewBlock = action.newBlocks;
+      setNew.splice(row, 1, setNewBlock);
+
+      // currentBlock
+      const setNewPositionBlock = { ...state.currentBlock };
+      setNewPositionBlock.row += 1;
+      setNewPositionBlock.column = 0;
+
+      return {
+        ...state,
+        blocksTable: [...setNew],
+        currentBlock: { ...setNewPositionBlock },
+      };
+    }
+    case 'SET_BLOCK_LETTER': {
+      const key = action.keyInput;
+      const { row, column } = state.currentBlock;
+      const setNew = [...state.blocksTable];
+      const rowB = [...setNew[row]];
+      const setLetter = { letter: key, color: 'none' };
+
+      rowB.splice(column, 1, setLetter);
+      setNew.splice(row, 1, rowB);
+
+      return {
+        ...state,
+        blocksTable: setNew,
+      };
+    }
+    case 'SET_BLOCKS_TABLE': {
+      return {
+        ...state,
+        blocksTable: action.setNewBlocksTable,
+      };
+    }
+    case 'DELETE_BLOCKS_TABLE': {
+      const { row, column } = state.currentBlock;
+      const setNew = [...state.blocksTable];
+      const rowB = [...setNew[row]];
+      const setLetter = { letter: '', color: 'none' };
+      rowB.splice(column - 1, 1, setLetter);
+      setNew.splice(row, 1, rowB);
+
+      return {
+        ...state,
+        blocksTable: setNew,
+      };
+    }
     case 'CURRENT_BLOCK_RESET_POSITION': {
       return {
         ...state,

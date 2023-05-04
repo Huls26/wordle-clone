@@ -1,7 +1,7 @@
 import collectLetterBg from './collectLetterBg';
 import fetchDictionaryThenRun from './fetchDictionaryThenRun';
 import deleteGuess from './deleteGuess';
-import enterGuess from './enterGuess';
+// import enterGuess from './enterGuess';
 import checkGuessWord from './checkGuessWord';
 import enterBlockLetter from './enterBlockLetter';
 
@@ -13,24 +13,24 @@ export default function keySetIdentifier(
   blocksTable,
   data,
   currentBlock,
-  row,
-  column,
   setIsTooShort,
   isTooShort,
   backspaceFor,
   setKeyboardLetterBg,
   setIs,
   is,
+  state,
   dispatch,
 ) {
+  const { row, column } = state.currentBlock;
   const isValidLen = column < len;
   const backspace = backspaceFor;
 
   if (key === backspace && is.validWord) {
-    deleteGuess(setBlocksTable, setCurrentBlock, blocksTable, currentBlock, row, column, dispatch);
+    deleteGuess(column, dispatch);
   } else if (key === 'Enter' && !is.gameOver) {
     if (!isValidLen) {
-      const mapBlocks = checkGuessWord(data, blocksTable[row]);
+      const mapBlocks = checkGuessWord(data, state.blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
       const isGuessed = data === mapWord.toLowerCase();
       // const upperCase = data.toUpperCase();
@@ -51,14 +51,11 @@ export default function keySetIdentifier(
       fetchDictionaryThenRun(
         mapWord,
         () => {
-          enterGuess(
-            setBlocksTable,
-            setCurrentBlock,
-            blocksTable,
-            row,
-            currentBlock,
-            mapBlocks,
-          );
+          // enterGuess(
+          //   mapBlocks,
+          //   dispatch,
+          // );
+          dispatch({ type: 'ENTER_GUESS_SET_BLOCKSTABLE', newBlocks: mapBlocks });
           setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
         },
         () => dispatch({ type: 'ERROR_HANDLING' }),
@@ -94,13 +91,7 @@ export default function keySetIdentifier(
     }
   } else if (!isTooShort && !is.gameOver) {
     enterBlockLetter(
-      setBlocksTable,
-      setCurrentBlock,
       isValidLen,
-      blocksTable,
-      currentBlock,
-      row,
-      column,
       key,
       dispatch,
     );

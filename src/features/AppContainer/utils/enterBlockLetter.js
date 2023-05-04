@@ -1,31 +1,26 @@
 export default function enterBlockLetter(
-  setBlocksTable,
-  setCurrentBlock,
   isValidLen,
-  blocksTable,
-  currentBlock,
-  row,
-  column,
   key,
   dispatch,
 ) {
   const upKey = key.toUpperCase().charCodeAt(0) - 64;
   const validKeys = upKey >= 1 && upKey <= 26;
 
-  if (validKeys) {
-    setBlocksTable(() => {
-      if (isValidLen) {
-        const setNew = [...blocksTable];
-        const rowB = [...setNew[row]];
-        const setLetter = { letter: key, color: 'none' };
-        rowB.splice(column, 1, setLetter);
-        setNew.splice(row, 1, rowB);
+  if (validKeys && isValidLen) {
+    // setBlocksTable(() => {
+    //   if (isValidLen) {
+    //     const setNew = [...blocksTable];
+    //     const rowB = [...setNew[row]];
+    //     const setLetter = { letter: key, color: 'none' };
+    //     rowB.splice(column, 1, setLetter);
+    //     setNew.splice(row, 1, rowB);
 
-        return setNew;
-      }
+    //     return setNew;
+    //   }
 
-      return blocksTable;
-    });
+    //   return blocksTable;
+    // });
+    dispatch({ type: 'SET_BLOCK_LETTER', keyInput: key });
     // setCurrentBlock(() => {
     //   const setNew = { ...currentBlock };
 

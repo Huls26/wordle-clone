@@ -29,7 +29,8 @@ export default function AppContainer() {
 
   useEffect(() => {
     const array = createBlockTable(wordData.length);
-    setBlocksTable(() => array);
+    // setBlocksTable(() => array);
+    dispatch({ type: 'SET_BLOCKS_TABLE', setNewBlocksTable: array });
   }, [wordData]);
 
   // useEffect(() => {
@@ -40,8 +41,8 @@ export default function AppContainer() {
 
   console.log(wordData);
   console.log(currentBlock);
-  console.log(state.correctGuessed);
-  function RunKeyIndentifier(key, row, column, backspace) {
+  console.log(state.blocksTable, blocksTable);
+  function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
       key,
       len,
@@ -50,31 +51,30 @@ export default function AppContainer() {
       blocksTable,
       wordData,
       state.currentBlock,
-      row,
-      column,
       setIsTooShort,
       isTooShort,
       backspace,
       setKeyboardLetterBg,
       setIs,
       is,
+      state,
       dispatch,
     );
   }
 
   function onKeyPress(key) {
-    const { row, column } = state.currentBlock;
+    const { row } = state.currentBlock;
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
     if (notGameOver && !isTooShort && is.validWord) {
-      RunKeyIndentifier(key, row, column, backspace);
+      RunKeyIndentifier(key, backspace);
     }
   }
 
   function onKeyDown(event) {
     const { key } = event;
-    const { row, column } = state.currentBlock;
+    const { row } = state.currentBlock;
     const backspace = 'Backspace';
     const notGameOver = row <= 5;
     let newKey = '';
@@ -88,7 +88,7 @@ export default function AppContainer() {
     }
 
     if (notGameOver && !isTooShort && is.validWord) {
-      RunKeyIndentifier(newKey, row, column, backspace);
+      RunKeyIndentifier(newKey, backspace);
     }
   }
 
@@ -127,7 +127,7 @@ export default function AppContainer() {
         wrongGuesses={state.wrongGuesses}
         level={state.level}
       />
-      { len ? <BlockTable blocksTable={blocksTable} /> : <SkeletonTailwind /> }
+      { len ? <BlockTable blocksTable={state.blocksTable} /> : <SkeletonTailwind /> }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
 
       <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling} />
