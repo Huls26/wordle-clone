@@ -1,10 +1,14 @@
 import { rest } from 'msw';
 
 const handlers = [
-  rest.get('https://random-word-api.herokuapp.com/word', (req, res, ctx) => res(
+  rest.get('https://random-word-api.vercel.app/api?words=6&length=5', (req, res, ctx) => res(
     ctx.status(200),
     ctx.json([
-      'Testing',
+      'tests',
+      'seven',
+      'fives',
+      'fight',
+      'opens',
     ]),
   )),
   rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/Testing', (req, res, ctx) => res(

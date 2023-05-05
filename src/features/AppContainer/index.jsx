@@ -17,8 +17,8 @@ import reducerMethod, { INITIAL_STATE } from './utils/levelReducer';
 
 export default function AppContainer() {
   const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
-  const [blocksTable, setBlocksTable] = useState(() => '');
-  const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
+  // const [blocksTable, setBlocksTable] = useState(() => '');
+  // const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
   const [isTooShort, setIsTooShort] = useState(() => false);
   const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
@@ -40,17 +40,12 @@ export default function AppContainer() {
   // }, [state]);
 
   console.log(wordData);
-  console.log(currentBlock);
-  console.log(state.blocksTable, blocksTable);
+  console.log(state.blocksTable);
   function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
       key,
       len,
-      setBlocksTable,
-      setCurrentBlock,
-      blocksTable,
       wordData,
-      state.currentBlock,
       setIsTooShort,
       isTooShort,
       backspace,

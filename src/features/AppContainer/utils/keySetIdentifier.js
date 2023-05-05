@@ -8,11 +8,7 @@ import enterBlockLetter from './enterBlockLetter';
 export default function keySetIdentifier(
   key,
   len,
-  setBlocksTable,
-  setCurrentBlock,
-  blocksTable,
   data,
-  currentBlock,
   setIsTooShort,
   isTooShort,
   backspaceFor,
