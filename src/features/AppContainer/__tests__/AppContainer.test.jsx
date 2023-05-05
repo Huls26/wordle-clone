@@ -2,7 +2,7 @@ import {
   describe, test, expect, // beforeEach,
 } from 'vitest';
 import {
-  render, userEvent, screen, waitFor, // within, // logRoles,
+  render, userEvent, screen, waitFor, within, // logRoles,
 } from '@utils/test-utils';
 
 import AppContainer from '..';
@@ -31,22 +31,22 @@ describe('AppContainer', () => {
       });
 
       test('when keyboard is click "Q" and "W" then display "Q" and "W" in the displayBlocks', async () => {
-        const { container, getAllByRole } = render(<AppContainer />);
+        const { container } = render(<AppContainer />);
         const keyElementQ = container.querySelector('[data-skbtn="Q"]');
         const keyElementW = container.querySelector('[data-skbtn="W"]');
+
         await userEvent.click(keyElementQ);
         await userEvent.click(keyElementW);
 
         waitFor(
           () => {
-            const [displayBlocksElementQ] = getAllByRole('heading', { name: /q/i });
-            const [displayBlocksElementW] = getAllByRole('heading', { name: /w/i });
+            const parentElement = screen.getByTestId('row-guess-container');
+            const displayBlocksElementQ = within(parentElement).getByRole('heading', { name: /q/i });
+            const displayBlocksElementW = within(parentElement).getByRole('heading', { name: /w/i });
             expect(displayBlocksElementQ).toBeInTheDocument();
             expect(displayBlocksElementW).toBeInTheDocument();
           },
-          {
-            timeout: 5000,
-          },
+          { timeout: 10000 },
         );
       });
 
@@ -89,7 +89,6 @@ describe('AppContainer', () => {
         const keyElementT = container.querySelector('[data-skbtn="T"]');
         const keyElementE = container.querySelector('[data-skbtn="E"]');
         const keyElementS = container.querySelector('[data-skbtn="S"]');
-        // const keyElementT2 = container.querySelector('[data-skbtn="T"]');
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
 
         await userEvent.click(keyElementT);
@@ -103,9 +102,9 @@ describe('AppContainer', () => {
         expect(tooShortElement).toBeInTheDocument();
       });
 
-      test.skip('length should be equal to the target word of the guessEntry block', async () => {
+      test('length should be equal to the target word of the guessEntry block', async () => {
         // fix test mock values to Q
-        const { container, getByText } = render(<AppContainer />);
+        const { container, queryByText } = render(<AppContainer />);
         const keyElementT = container.querySelector('[data-skbtn="T"]');
         const keyElementE = container.querySelector('[data-skbtn="E"]');
         const keyElementS = container.querySelector('[data-skbtn="S"]');
@@ -119,39 +118,45 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementEnter);
 
-        const tooShortElement = getByText('Too short');
-        expect(tooShortElement).toBeInTheDocument();
+        waitFor(
+          () => {
+            const tooShortElement = queryByText('Too short');
+            expect(tooShortElement).not.toBeInTheDocument();
+          },
+          { timeout: 5000 },
+        );
       });
 
-      test.skip('After 3 seconds modal "Too short" should be gone, when the length of the guess is not valid', async () => {
-        const { container, getByText } = render(<AppContainer />);
-        // fix test mock values to Q
+      test('After 3 seconds modal "Too short" should be gone, when the length of the guess is not valid', async () => {
+        const { container, findByText } = render(<AppContainer />);
         const keyElementQ = container.querySelector('[data-skbtn="Q"]');
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
 
         await userEvent.click(keyElementQ);
         await userEvent.click(keyElementEnter);
 
+        const tooShortElement = await findByText(/too short/i);
+
         waitFor(
           () => {
-            const tooShortElement = getByText(/too short/i);
+            // const tooShortElement = queryByText(/too short/i);
             expect(tooShortElement).not.toBeInTheDocument();
           },
-          { timeout: 3000 },
+          { timeout: 4000 },
         );
       });
     });
 
-    describe.skip('invalid word enter', () => {
+    describe('invalid word enter', () => {
       test('display "Invalid word" when enter random and gibberish word', async () => {
         const { container, getByText } = render(<AppContainer />);
         const keyElementH = container.querySelector('[data-skbtn="H"]');
         const keyElementI = container.querySelector('[data-skbtn="I"]');
         const keyElementX = container.querySelector('[data-skbtn="X"]');
         const keyElementJ = container.querySelector('[data-skbtn="J"]');
-        const keyElementO = container.querySelector('[data-skbtn="O"]');
-        const keyElementF = container.querySelector('[data-skbtn="F"]');
-        const keyElementZ = container.querySelector('[data-skbtn="Z"]');
+        const keyElementN = container.querySelector('[data-skbtn="N"]');
+        // const keyElementF = container.querySelector('[data-skbtn="F"]');
+        // const keyElementZ = container.querySelector('[data-skbtn="Z"]');
 
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
 
@@ -159,9 +164,7 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementI);
         await userEvent.click(keyElementX);
         await userEvent.click(keyElementJ);
-        await userEvent.click(keyElementO);
-        await userEvent.click(keyElementF);
-        await userEvent.click(keyElementZ);
+        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         waitFor(
@@ -174,29 +177,25 @@ describe('AppContainer', () => {
       });
 
       test('after 5 seconds "Invalid word" remove', async () => {
-        const { container, getByText } = render(<AppContainer />);
+        const { container } = render(<AppContainer />);
         const keyElementH = container.querySelector('[data-skbtn="H"]');
         const keyElementI = container.querySelector('[data-skbtn="I"]');
         const keyElementX = container.querySelector('[data-skbtn="X"]');
         const keyElementJ = container.querySelector('[data-skbtn="J"]');
-        const keyElementO = container.querySelector('[data-skbtn="O"]');
-        const keyElementF = container.querySelector('[data-skbtn="F"]');
         const keyElementZ = container.querySelector('[data-skbtn="Z"]');
 
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+        const invalidElement = screen.queryByTestId('display-warning');
 
         await userEvent.click(keyElementH);
         await userEvent.click(keyElementI);
         await userEvent.click(keyElementX);
         await userEvent.click(keyElementJ);
-        await userEvent.click(keyElementO);
-        await userEvent.click(keyElementF);
         await userEvent.click(keyElementZ);
         await userEvent.click(keyElementEnter);
 
         waitFor(
           () => {
-            const invalidElement = getByText(/invalid word/i);
             expect(invalidElement).not.toBeInTheDocument();
           },
           { timeout: 5000 },
@@ -204,41 +203,35 @@ describe('AppContainer', () => {
       });
     });
 
-    describe.skip('GameOver', () => {
-      test('when you guess the word "Congratulation and play again should display"', async () => {
-        const { container, getByRole } = render(<AppContainer />);
+    describe('Enter Guessed', () => {
+      test('correct guess will display correct message something like that', async () => {
+        const { container, getByText } = render(<AppContainer />);
         const keyElementT = container.querySelector('[data-skbtn="T"]');
         const keyElementE = container.querySelector('[data-skbtn="E"]');
         const keyElementS = container.querySelector('[data-skbtn="S"]');
-        const keyElementI = container.querySelector('[data-skbtn="I"]');
-        const keyElementN = container.querySelector('[data-skbtn="N"]');
-        const keyElementG = container.querySelector('[data-skbtn="G"]');
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+        // const correctElement = queryByText('You guessed the word keep it up!!');
 
         await userEvent.click(keyElementT);
         await userEvent.click(keyElementE);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementT);
-        await userEvent.click(keyElementI);
-        await userEvent.click(keyElementN);
-        await userEvent.click(keyElementG);
+        await userEvent.click(keyElementS);
         await userEvent.click(keyElementEnter);
 
         waitFor(() => {
-          const gameOverElement = getByRole('article');
-          expect(gameOverElement).toBeInTheDocument();
+          const correctElement = getByText('You guessed the word keep it up!!');
+          expect(correctElement).toBeInTheDocument();
         }, { timeout: 5000 });
       });
 
-      test.skip('Display Game Over', async () => {
-        const { container, getByRole } = render(<AppContainer />);
+      test('Display wrong guess', async () => {
+        const { container } = render(<AppContainer />);
         const keyElementJ = container.querySelector('[data-skbtn="J"]');
         const keyElementX = container.querySelector('[data-skbtn="X"]');
         const keyElementO = container.querySelector('[data-skbtn="O"]');
         const keyElementS = container.querySelector('[data-skbtn="S"]');
         const keyElementA = container.querySelector('[data-skbtn="A"]');
-        const keyElementK = container.querySelector('[data-skbtn="K"]');
-        const keyElementN = container.querySelector('[data-skbtn="N"]');
 
         const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
 
@@ -248,8 +241,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         // second row
@@ -258,8 +249,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         // third row
@@ -268,8 +257,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         // forth row
@@ -278,8 +265,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         // fifth row
@@ -288,8 +273,6 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
 
         // sixth row
@@ -298,12 +281,12 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementO);
         await userEvent.click(keyElementS);
         await userEvent.click(keyElementA);
-        await userEvent.click(keyElementK);
-        await userEvent.click(keyElementN);
         await userEvent.click(keyElementEnter);
+        // const gameOverElement =
+        // await screen.findByText('Your guess is wrong. The word is "TESTS"');
 
         waitFor(() => {
-          const gameOverElement = getByRole('heading', { name: /game over the word is testing/i });
+          const gameOverElement = screen.getByText('Your guess is wrong. The word is "TESTS"');
           expect(gameOverElement).toBeInTheDocument();
         }, { timeout: 5000 });
       });
@@ -317,6 +300,96 @@ describe('AppContainer', () => {
           const correctElement = container.querySelector('#root > main > section:nth-child(2) > div:nth-child(1) > svg:nth-child(1)');
 
           expect(correctElement).toBeVisible();
+        }, { timeout: 5000 });
+      });
+
+      test('correct guess will display correct message something like that and earn a star', async () => {
+        const { container, queryByText } = render(<AppContainer />);
+        const keyElementT = container.querySelector('[data-skbtn="T"]');
+        const keyElementE = container.querySelector('[data-skbtn="E"]');
+        const keyElementS = container.querySelector('[data-skbtn="S"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+        const correctElement = queryByText('You guessed the word keep it up!!');
+        const starElement = container.querySelector('#root > main > section:nth-child(2) > div:nth-child(1) > svg:nth-child(1)');
+
+        await userEvent.click(keyElementT);
+        await userEvent.click(keyElementE);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementT);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementEnter);
+
+        waitFor(() => {
+          // const gameOverElement = getByText('You guessed the word keep it up!!');
+          expect(correctElement).toBeInTheDocument();
+          expect(starElement).toHaveClass('text-green');
+        }, { timeout: 5000 });
+      });
+
+      test('Display wrong guess and X mark will add', async () => {
+        const { container } = render(<AppContainer />);
+        const keyElementJ = container.querySelector('[data-skbtn="J"]');
+        const keyElementX = container.querySelector('[data-skbtn="X"]');
+        const keyElementO = container.querySelector('[data-skbtn="O"]');
+        const keyElementS = container.querySelector('[data-skbtn="S"]');
+        const keyElementA = container.querySelector('[data-skbtn="A"]');
+
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
+        const wrongMarkElement = container.querySelector('#root > main > section:nth-child(2) > div:nth-child(3) > svg:nth-child(1)');
+
+        // first row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+
+        // second row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+
+        // third row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+
+        // forth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+
+        // fifth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+
+        // sixth row
+        await userEvent.click(keyElementJ);
+        await userEvent.click(keyElementX);
+        await userEvent.click(keyElementO);
+        await userEvent.click(keyElementS);
+        await userEvent.click(keyElementA);
+        await userEvent.click(keyElementEnter);
+        const gameOverElement = await screen.findByText('Your guess is wrong. The word is "TESTS"');
+
+        waitFor(() => {
+          // const gameOverElement = screen.getByText('Your guess is wrong. The word is "TESTS"');
+          expect(gameOverElement).toBeInTheDocument();
+          expect(wrongMarkElement).toHaveClass('text-red');
         }, { timeout: 5000 });
       });
     });

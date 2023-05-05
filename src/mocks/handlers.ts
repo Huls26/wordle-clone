@@ -51,6 +51,46 @@ const handlers = [
       }],
     ]),
   )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/TESTS', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/HIXJN', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      {
+        title: 'Testing',
+      },
+    ]),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/HIXJZ', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json(
+      {
+        title: 'Testing',
+      },
+    ),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/JXOSA', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
+  rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/SEVEN', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.json([
+      [{
+        title: 'Testing',
+      }],
+    ]),
+  )),
 ];
 
 export default handlers;

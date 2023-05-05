@@ -5,7 +5,7 @@ export default async function fetchDictionaryThenRun(toCheck, callback, ERROR_HA
     const isValidWord = await res.json();
     const isArray = Array.isArray(isValidWord);
 
-    if (isArray || validWords.includes(toCheck)) {
+    if (isArray || validWords.includes(toCheck.toLowerCase())) {
       callback();
     }
     return isArray;

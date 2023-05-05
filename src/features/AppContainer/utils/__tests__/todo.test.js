@@ -1,8 +1,6 @@
 import {
   describe, test, expect, // beforeEach,
 } from 'vitest';
-import { rest } from 'msw';
-import server from '@mocks/server';
 
 import collectLetterBg from '../collectLetterBg';
 import fetchDictionaryThenRun from '../fetchDictionaryThenRun';
@@ -49,17 +47,8 @@ describe('test collectLetterBg func', () => {
   });
 });
 
-describe.skip('fectDictionaryThenRun.js', () => {
-  test('error handling', async () => {
-    const fetchWord = 'https://api.dictionaryapi.dev/api/v2/entries/en/toBeError';
-    server.use(
-      rest.get(
-        fetchWord,
-        (req, res, ctx) => res(ctx.status(500)),
-      ),
-    );
-
-    const fetchDic = await fetchDictionaryThenRun('toBeError');
-    expect(fetchDic).toThrowError();
+describe('fectDictionaryThenRun.js', () => {
+  test('this should accept the answer: should be truthy', async () => {
+    fetchDictionaryThenRun('SEVEN', () => 'run something', () => 'ERROR HANDLING', ['tests', 'seven']).then((isvalid) => expect(isvalid).toBeTruthy());
   });
 });

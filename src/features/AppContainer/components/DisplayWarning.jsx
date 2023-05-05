@@ -14,6 +14,7 @@ export default function DisplayWarning({ bg, text, isDisplay }) {
   const display = isDisplay ? (
     <section
       className={styles}
+      data-testid="display-warning"
     >
       {text}
     </section>
