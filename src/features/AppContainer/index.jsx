@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import useFetchData from '@hooks/useFetchData';
 
 import BlockTable from '@features/BlockTable';
@@ -16,12 +16,12 @@ import keySetIdentifier from './utils/keySetIdentifier';
 import reducerMethod, { INITIAL_STATE } from './utils/levelReducer';
 
 export default function AppContainer() {
-  const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
+  // const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
   // const [blocksTable, setBlocksTable] = useState(() => '');
   // const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
-  const [isTooShort, setIsTooShort] = useState(() => false);
-  const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
-  const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
+  // const [isTooShort, setIsTooShort] = useState(() => false);
+  // const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
+  // const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
   const data = useFetchData(state.level);
   const wordData = data[state.currentWord];
@@ -46,12 +46,7 @@ export default function AppContainer() {
       key,
       len,
       wordData,
-      setIsTooShort,
-      isTooShort,
       backspace,
-      setKeyboardLetterBg,
-      setIs,
-      is,
       state,
       dispatch,
     );
@@ -62,7 +57,7 @@ export default function AppContainer() {
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
-    if (notGameOver && !isTooShort && is.validWord) {
+    if (notGameOver && !state.isTooShort && state.validWord) {
       RunKeyIndentifier(key, backspace);
     }
   }
@@ -82,7 +77,7 @@ export default function AppContainer() {
       newKey = key.toUpperCase();
     }
 
-    if (notGameOver && !isTooShort && is.validWord) {
+    if (notGameOver && !state.isTooShort && state.validWord) {
       RunKeyIndentifier(newKey, backspace);
     }
   }
@@ -113,8 +108,8 @@ export default function AppContainer() {
         text={state.gameOverText}
         isDisplay={state.gameOver}
       />
-      <DisplayWarning bg="bg-orange" text="Too short" isDisplay={Boolean(isTooShort)} />
-      <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={Boolean(!is.validWord)} />
+      <DisplayWarning bg="bg-orange" text="Too short" isDisplay={state.isTooShort} />
+      <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={!state.validWord} />
 
       <TitleBar />
       <NavLevel
@@ -123,7 +118,7 @@ export default function AppContainer() {
         level={state.level}
       />
       { len ? <BlockTable blocksTable={state.blocksTable} /> : <SkeletonTailwind /> }
-      <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={keyboardLetterBg} />
+      <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={state.keyboardLetterBG} />
 
       <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling} />
     </main>

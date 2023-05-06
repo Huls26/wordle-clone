@@ -10,10 +10,31 @@ export const INITIAL_STATE = {
   gameOverText: '',
   currentBlock: { row: 0, column: 0 },
   blocksTable: '',
+  isTooShort: false,
+  keyboardLetterBG: { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' },
+  validWord: true,
 };
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'SET_VALID_WORD': {
+      return {
+        ...state,
+        validWord: action.setCondition,
+      };
+    }
+    case 'SET_BG_KEYBOARD_LETTER': {
+      return {
+        ...state,
+        keyboardLetterBG: action.setBG,
+      };
+    }
+    case 'SET_TOO_SHORT': {
+      return {
+        ...state,
+        isTooShort: action.setCondition,
+      };
+    }
     case 'ENTER_GUESS_SET_BLOCKSTABLE': {
       // blocks table
       const { row } = state.currentBlock;

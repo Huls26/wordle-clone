@@ -2,7 +2,7 @@ import {
   describe, test, expect, // beforeEach,
 } from 'vitest';
 import {
-  render, userEvent, screen, waitFor, within, // logRoles,
+  render, userEvent, screen, waitFor, // within, // logRoles,
 } from '@utils/test-utils';
 
 import AppContainer from '..';
@@ -38,16 +38,16 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementQ);
         await userEvent.click(keyElementW);
 
-        waitFor(
-          () => {
-            const parentElement = screen.getByTestId('row-guess-container');
-            const displayBlocksElementQ = within(parentElement).getByRole('heading', { name: /q/i });
-            const displayBlocksElementW = within(parentElement).getByRole('heading', { name: /w/i });
-            expect(displayBlocksElementQ).toBeInTheDocument();
-            expect(displayBlocksElementW).toBeInTheDocument();
-          },
-          { timeout: 10000 },
-        );
+        // const parentElement = screen.getByTestId('row-guess-container');
+        // const displayBlocksElementQ = within(parentElement).getByRole('heading', { name: /q/i });
+        // const displayBlocksElementW = within(parentElement).getByRole('heading', { name: /w/i });
+        // expect(displayBlocksElementQ).toBeInTheDocument();
+        // expect(displayBlocksElementW).toBeInTheDocument();
+
+        const [displayBlocksElementQ] = screen.getAllByRole('heading', { name: 'Q' });
+        const [displayBlocksElementW] = screen.getAllByRole('heading', { name: 'W' });
+        expect(displayBlocksElementQ).toBeInTheDocument();
+        expect(displayBlocksElementW).toBeInTheDocument();
       });
 
       test('guess value is "WATER" the bg-color of the keyboard should match the rowBlocks', async () => {

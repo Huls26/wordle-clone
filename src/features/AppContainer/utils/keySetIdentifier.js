@@ -9,12 +9,7 @@ export default function keySetIdentifier(
   key,
   len,
   data,
-  setIsTooShort,
-  isTooShort,
   backspaceFor,
-  setKeyboardLetterBg,
-  setIs,
-  is,
   state,
   dispatch,
 ) {
@@ -22,9 +17,9 @@ export default function keySetIdentifier(
   const isValidLen = column < len;
   const backspace = backspaceFor;
 
-  if (key === backspace && is.validWord) {
+  if (key === backspace && state.validWord) {
     deleteGuess(column, dispatch);
-  } else if (key === 'Enter' && !is.gameOver) {
+  } else if (key === 'Enter' && !state.gameOver) {
     if (!isValidLen) {
       const mapBlocks = checkGuessWord(data, state.blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
@@ -52,20 +47,24 @@ export default function keySetIdentifier(
           //   dispatch,
           // );
           dispatch({ type: 'ENTER_GUESS_SET_BLOCKSTABLE', newBlocks: mapBlocks });
-          setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
+          // setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
+          const setBG = collectLetterBg(mapBlocks);
+          dispatch({ type: 'SET_BG_KEYBOARD_LETTER', setBG });
         },
         () => dispatch({ type: 'ERROR_HANDLING' }),
       )
         .then((isValid) => {
           if (!isValid) {
-            setIs((prevValue) => ({
-              ...prevValue,
-              validWord: isValid,
-            }));
-            setTimeout(() => setIs((prevValue) => ({
-              ...prevValue,
-              validWord: !prevValue.validWord,
-            })), 3000);
+            // setIs((prevValue) => ({
+            //   ...prevValue,
+            //   validWord: isValid,
+            // }));
+            // setTimeout(() => setIs((prevValue) => ({
+            //   ...prevValue,
+            //   validWord: !prevValue.validWord,
+            // })), 3000);
+            dispatch({ type: 'SET_VALID_WORD', setCondition: false });
+            setTimeout(() => dispatch({ type: 'SET_VALID_WORD', setCondition: true }), 3000);
           } else if (row >= 5 && !isGuessed) {
             // setIs((prevValue) => ({
             //   ...prevValue,
@@ -82,10 +81,12 @@ export default function keySetIdentifier(
           }
         });
     } else {
-      setIsTooShort((prev) => !prev);
-      setTimeout(() => setIsTooShort((prev) => !prev), 5000);
+      // setIsTooShort((prev) => !prev);
+      // setTimeout(() => setIsTooShort((prev) => !prev), 5000);
+      dispatch({ type: 'SET_TOO_SHORT', setCondition: true });
+      setTimeout(() => dispatch({ type: 'SET_TOO_SHORT', setCondition: false }), 3000);
     }
-  } else if (!isTooShort && !is.gameOver) {
+  } else if (!state.isTooShort && !state.gameOver) {
     enterBlockLetter(
       isValidLen,
       key,
