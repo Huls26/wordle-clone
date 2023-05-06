@@ -17,6 +17,18 @@ export const INITIAL_STATE = {
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'RESET_GAME': {
+      return {
+        ...INITIAL_STATE,
+      };
+    }
+    case 'GAMEOVER_MY_FRIEND': {
+      return {
+        ...state,
+        gameOver: true,
+        gameOverText: action.setText,
+      };
+    }
     case 'SET_VALID_WORD': {
       return {
         ...state,

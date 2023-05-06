@@ -51,4 +51,8 @@ describe('fectDictionaryThenRun.js', () => {
   test('this should accept the answer: should be truthy', async () => {
     fetchDictionaryThenRun('SEVEN', () => 'run something', () => 'ERROR HANDLING', ['tests', 'seven']).then((isvalid) => expect(isvalid).toBeTruthy());
   });
+
+  test('this should accept the answer: should be falsy', async () => {
+    fetchDictionaryThenRun('SEVEN', () => 'run something', () => 'ERROR HANDLING', ['tests', 'first']).then((isvalid) => expect(isvalid).toBeFalsy());
+  });
 });

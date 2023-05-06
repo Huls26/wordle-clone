@@ -85,11 +85,11 @@ const handlers = [
   )),
   rest.get('https://api.dictionaryapi.dev/api/v2/entries/en/SEVEN', (req, res, ctx) => res(
     ctx.status(200),
-    ctx.json([
-      [{
+    ctx.json(
+      {
         title: 'Testing',
-      }],
-    ]),
+      },
+    ),
   )),
 ];
 

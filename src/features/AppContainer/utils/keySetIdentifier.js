@@ -12,6 +12,7 @@ export default function keySetIdentifier(
   backspaceFor,
   state,
   dispatch,
+  wordBank,
 ) {
   const { row, column } = state.currentBlock;
   const isValidLen = column < len;
@@ -52,6 +53,7 @@ export default function keySetIdentifier(
           dispatch({ type: 'SET_BG_KEYBOARD_LETTER', setBG });
         },
         () => dispatch({ type: 'ERROR_HANDLING' }),
+        wordBank,
       )
         .then((isValid) => {
           if (!isValid) {
@@ -75,6 +77,7 @@ export default function keySetIdentifier(
               () => {
                 dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'wrongGuessed' });
                 dispatch({ type: 'CHANGE_CURRENT_WORD' });
+                dispatch({ type: 'CURRENT_BLOCK_RESET_POSITION' });
               },
               5000,
             );

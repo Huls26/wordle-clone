@@ -35,6 +35,6 @@ export default async function fetchData(setData, level) {
       setData(data);
     }
   } catch (error) {
-    setData('Bonus');
+    setData(['bonus']);
   }
 }

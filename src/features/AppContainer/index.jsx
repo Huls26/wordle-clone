@@ -33,14 +33,19 @@ export default function AppContainer() {
     dispatch({ type: 'SET_BLOCKS_TABLE', setNewBlocksTable: array });
   }, [wordData]);
 
-  // useEffect(() => {
-  //   const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
+  useEffect(() => {
+    const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
+    const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'my hopes are high. Do your best next time.'];
+    const randomIdx = Math.floor(Math.random() * listOfGameOverM.length);
+    const randomMsg = listOfGameOverM[randomIdx];
 
-  //   console.log(isGameOver);
-  // }, [state]);
+    if (isGameOver) {
+      setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: randomMsg }), 5000);
+    }
+  }, [state.wrongGuesses]);
 
   console.log(wordData);
-  console.log(state.blocksTable);
+
   function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
       key,
@@ -49,6 +54,7 @@ export default function AppContainer() {
       backspace,
       state,
       dispatch,
+      data,
     );
   }
 
@@ -84,6 +90,7 @@ export default function AppContainer() {
 
   function playAgainBtn() {
     window.location.reload(false);
+    // dispatch({ type: 'RESET_GAME' });
   }
 
   return (
