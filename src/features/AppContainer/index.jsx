@@ -23,7 +23,7 @@ export default function AppContainer() {
   // const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   // const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
-  const data = useFetchData(state.level);
+  const [data, setDATA] = useFetchData(state.level);
   const wordData = data[state.currentWord];
   const len = wordData.length;
 
@@ -43,8 +43,6 @@ export default function AppContainer() {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: randomMsg }), 5000);
     }
   }, [state.wrongGuesses]);
-
-  console.log(wordData);
 
   function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
@@ -90,7 +88,8 @@ export default function AppContainer() {
 
   function playAgainBtn() {
     window.location.reload(false);
-    // dispatch({ type: 'RESET_GAME' });
+    dispatch({ type: 'RESET_GAME' });
+    setDATA(() => ['']);
   }
 
   return (
@@ -124,7 +123,11 @@ export default function AppContainer() {
         wrongGuesses={state.wrongGuesses}
         level={state.level}
       />
-      { len ? <BlockTable blocksTable={state.blocksTable} /> : <SkeletonTailwind /> }
+      {
+        len
+          ? <BlockTable blocksTable={state.blocksTable} isLoading={state.isLoading} />
+          : <SkeletonTailwind />
+      }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={state.keyboardLetterBG} />
 
       <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling} />

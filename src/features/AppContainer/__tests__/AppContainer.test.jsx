@@ -17,17 +17,12 @@ describe('AppContainer', () => {
 
     describe('userEvent BlockTable and keyboard', () => {
       test('when keyboard is click "Q" then display Q in the displayBlocks', async () => {
-        const { container, getByRole } = render(<AppContainer />);
+        const { container, getAllByRole } = render(<AppContainer />);
         const keyElement = container.querySelector('[data-skbtn="Q"]');
         await userEvent.click(keyElement);
 
-        waitFor(
-          () => {
-            const displayBlocksElement = getByRole('heading', { name: /q/i });
-            expect(displayBlocksElement).toBeInTheDocument();
-          },
-          { timeout: 5000 },
-        );
+        const [displayBlocksElement] = getAllByRole('heading', { name: /q/i });
+        expect(displayBlocksElement).toBeInTheDocument();
       });
 
       test('when keyboard is click "Q" and "W" then display "Q" and "W" in the displayBlocks', async () => {

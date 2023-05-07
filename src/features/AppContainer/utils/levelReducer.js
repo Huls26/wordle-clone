@@ -9,14 +9,21 @@ export const INITIAL_STATE = {
   gameOver: false,
   gameOverText: '',
   currentBlock: { row: 0, column: 0 },
-  blocksTable: '',
+  blocksTable: false,
   isTooShort: false,
   keyboardLetterBG: { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' },
   validWord: true,
+  isLoading: true,
 };
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'LOADING_GAME': {
+      return {
+        ...state,
+        isLoading: action.setLoading,
+      };
+    }
     case 'RESET_GAME': {
       return {
         ...INITIAL_STATE,

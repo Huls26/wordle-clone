@@ -8,5 +8,5 @@ export default function useFetchData(level) {
     fetchData((data) => setWord(() => data), level);
   }, [level]);
 
-  return words;
+  return [words, setWord];
 }
