@@ -13,11 +13,17 @@ export const INITIAL_STATE = {
   isTooShort: false,
   keyboardLetterBG: { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' },
   validWord: true,
-  isLoading: true,
+  isLoading: false,
 };
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'INCREASE_LEVEL': {
+      return {
+        ...INITIAL_STATE,
+        level: state.level + 1,
+      };
+    }
     case 'LOADING_GAME': {
       return {
         ...state,
@@ -180,6 +186,9 @@ export default function reducerMethod(state, action) {
       };
     }
     default:
-      return state;
+      return {
+        ...INITIAL_STATE,
+        errorHandling: true,
+      };
   }
 }

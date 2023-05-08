@@ -1,12 +1,16 @@
+import { useId } from 'react';
+
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import { RxCrossCircled } from 'react-icons/rx';
 import { ImCross } from 'react-icons/im';
 import { PropTypes } from 'prop-types';
 
 export default function NavLevel({ correctGuesses, wrongGuesses, level }) {
-  const displayCorrectGuessed = correctGuesses.map((isGuessed, idx) => (isGuessed ? <AiFillStar className="text-green" key={idx} /> : <AiOutlineStar key={idx} />));
+  const keyId = useId();
 
-  const displayWrongGuessed = wrongGuesses.map((isGuessed, idx) => (isGuessed ? <ImCross className="text-red text-lg" key={idx} /> : <RxCrossCircled key={idx} />));
+  const displayCorrectGuessed = correctGuesses.map((isGuessed, idx) => (isGuessed ? <AiFillStar className="text-green" key={keyId + idx} /> : <AiOutlineStar key={keyId + idx} />));
+
+  const displayWrongGuessed = wrongGuesses.map((isGuessed, idx) => (isGuessed ? <ImCross className="text-red text-lg" key={keyId + idx} /> : <RxCrossCircled key={keyId + idx} />));
 
   return (
     <section className="flex w-[20em] justify-between mb-2 items-center">

@@ -15,7 +15,7 @@ export default function GameOver({ playAgain, text, isDisplay }) {
           top-[6em]
           md:top-[5em]
           max-w-[17em]
-          md:max-w-full
+          md:max-w-[30em]
     "
       >
         <h1 className="mb-5 md:mb-6 leading-6 md:leading-normal drop-shadow-lg cursor-pointer ">

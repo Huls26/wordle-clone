@@ -23,9 +23,10 @@ export default function AppContainer() {
   // const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
   // const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
-  const [data, setDATA] = useFetchData(state.level);
-  const wordData = data[state.currentWord];
-  const len = wordData.length;
+  const [data, dispatchFetch] = useFetchData();
+  const shouldRun = state.currentWord < data.length;
+  const wordData = shouldRun ? data[state.currentWord] : '';
+  const len = wordData ? wordData.length : false;
 
   useEffect(() => {
     const array = createBlockTable(wordData.length);
@@ -35,7 +36,7 @@ export default function AppContainer() {
 
   useEffect(() => {
     const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
-    const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'my hopes are high. Do your best next time.'];
+    const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'My hopes are high. Do your best next time.'];
     const randomIdx = Math.floor(Math.random() * listOfGameOverM.length);
     const randomMsg = listOfGameOverM[randomIdx];
 
@@ -43,6 +44,19 @@ export default function AppContainer() {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: randomMsg }), 5000);
     }
   }, [state.wrongGuesses]);
+
+  useEffect(() => {
+    const isGameOverFinishTheGame = state.correctGuesses.every((isCorrect) => isCorrect);
+    const GAMEOVERMESSAGE = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover. - Horace Jackson Brown Jr.";
+
+    if (isGameOverFinishTheGame) {
+      dispatch({ type: 'INCREASE_LEVEL' });
+    }
+
+    if (isGameOverFinishTheGame && state.level === 4) {
+      setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 3000);
+    }
+  }, [state.correctGuesses, state.level]);
 
   function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
@@ -87,9 +101,8 @@ export default function AppContainer() {
   }
 
   function playAgainBtn() {
-    window.location.reload(false);
     dispatch({ type: 'RESET_GAME' });
-    setDATA(() => ['']);
+    dispatchFetch({ type: 'RESET_FETCH_DATA' });
   }
 
   return (
@@ -106,7 +119,7 @@ export default function AppContainer() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={-1}
     >
-      <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len)} />
+      <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len) && shouldRun} />
       <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
       <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${wordData.toUpperCase()}"`} isDisplay={state.wrongGuessed} />
       <GameOver
@@ -130,7 +143,8 @@ export default function AppContainer() {
       }
       <KeyBoard onKeyPress={(event) => onKeyPress(event)} keysBg={state.keyboardLetterBG} />
 
-      <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling} />
+      <DisplayWarning bg="bg-red" text="SORRY, SOMETHING WENT WRONG TRY AGAIN LATER" isDisplay={state.errorHandling || !shouldRun} />
+
     </main>
   );
 }

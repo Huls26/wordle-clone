@@ -30,6 +30,7 @@ export default function keySetIdentifier(
       if (isGuessed) {
         // fix display when correct guessed and when wrong !!!
         dispatch({ type: 'CORRECT_GUESSED' });
+
         setTimeout(
           () => {
             dispatch({ type: 'CHANGE_CURRENT_WORD' });
@@ -38,6 +39,9 @@ export default function keySetIdentifier(
           },
           3000,
         );
+      } else {
+        // set Loading component
+        dispatch({ type: 'LOADING_GAME', setLoading: true });
       }
 
       fetchDictionaryThenRun(
@@ -48,6 +52,7 @@ export default function keySetIdentifier(
           //   dispatch,
           // );
           dispatch({ type: 'ENTER_GUESS_SET_BLOCKSTABLE', newBlocks: mapBlocks });
+          dispatch({ type: 'LOADING_GAME', setLoading: false });
           // setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
           const setBG = collectLetterBg(mapBlocks);
           dispatch({ type: 'SET_BG_KEYBOARD_LETTER', setBG });
@@ -66,13 +71,15 @@ export default function keySetIdentifier(
             //   validWord: !prevValue.validWord,
             // })), 3000);
             dispatch({ type: 'SET_VALID_WORD', setCondition: false });
+            dispatch({ type: 'LOADING_GAME', setLoading: false });
             setTimeout(() => dispatch({ type: 'SET_VALID_WORD', setCondition: true }), 3000);
-          } else if (row >= 5 && !isGuessed) {
+          } else if (row >= 5 && !isGuessed && !state.gameOver) {
             // setIs((prevValue) => ({
             //   ...prevValue,
             //   text: `GAME OVER The word is "${upperCase}"`,
             // }));
             dispatch({ type: 'WRONG_GUESSED' });
+            dispatch({ type: 'LOADING_GAME', setLoading: false });
             setTimeout(
               () => {
                 dispatch({ type: 'DISPLAY_TIMEOUT', keyName: 'wrongGuessed' });
