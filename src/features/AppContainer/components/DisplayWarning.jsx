@@ -6,7 +6,7 @@ export default function DisplayWarning({ bg, text, isDisplay }) {
     text-[#eceef2ee] text-2xl lg:text-3xl font-bold
     rounded-lg
     absolute z-50
-    top-[8em] md:top-[6em]
+    top-[8em] md:top-[8em]
     animate-bounce
     max-w-[16em]
     md:max-w-full

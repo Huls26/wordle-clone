@@ -4,7 +4,8 @@ export default function SkeletonTailwind() {
       <div className="
               flex items-center justify-center
               w-[23em] h-[20em]
-              md:w-[33em] md:h-[27em]
+              md:w-[26em] md:h-[25em]
+              lg:w-[33em] lg:h-[27em]
               bg-gray-light rounded dark:bg-gray
               mb-2 md:mb-4
             "

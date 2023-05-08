@@ -10,6 +10,8 @@ export default async function fetchData(setData, level) {
     maxValue = 6;
   } else if (level === 3) {
     maxValue = 7;
+  } else {
+    maxValue = 8;
   }
 
   // console.log(maxValue, level);

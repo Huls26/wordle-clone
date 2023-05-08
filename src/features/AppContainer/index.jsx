@@ -34,6 +34,7 @@ export default function AppContainer() {
     dispatch({ type: 'SET_BLOCKS_TABLE', setNewBlocksTable: array });
   }, [wordData]);
 
+  console.log(wordData);
   useEffect(() => {
     const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
     const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'My hopes are high. Do your best next time.'];
@@ -49,14 +50,16 @@ export default function AppContainer() {
     const isGameOverFinishTheGame = state.correctGuesses.every((isCorrect) => isCorrect);
     const GAMEOVERMESSAGE = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover. - Horace Jackson Brown Jr.";
 
-    if (isGameOverFinishTheGame) {
-      dispatch({ type: 'INCREASE_LEVEL' });
-    }
-
     if (isGameOverFinishTheGame && state.level === 4) {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 3000);
+    } else if (isGameOverFinishTheGame) {
+      setTimeout(() => {
+        dispatchFetch({ type: 'RESET_FETCH_DATA' });
+        dispatch({ type: 'INCREASE_LEVEL' });
+        dispatchFetch({ type: 'SET_LEVEL_UP', setLevel: state.level + 1 });
+      }, 3000);
     }
-  }, [state.correctGuesses, state.level]);
+  }, [dispatchFetch, state.correctGuesses, state.level]);
 
   function RunKeyIndentifier(key, backspace) {
     keySetIdentifier(
@@ -75,7 +78,12 @@ export default function AppContainer() {
     const backspace = '&#x2B05';
     const notGameOver = row <= 5;
 
-    if (notGameOver && !state.isTooShort && state.validWord) {
+    if (
+      notGameOver
+        && !state.isTooShort
+        && state.validWord
+        && !state.correctGuessed
+    ) {
       RunKeyIndentifier(key, backspace);
     }
   }
@@ -95,7 +103,12 @@ export default function AppContainer() {
       newKey = key.toUpperCase();
     }
 
-    if (notGameOver && !state.isTooShort && state.validWord) {
+    if (
+      notGameOver
+        && !state.isTooShort
+        && state.validWord
+        && !state.correctGuessed
+    ) {
       RunKeyIndentifier(newKey, backspace);
     }
   }

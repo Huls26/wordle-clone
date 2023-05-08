@@ -33,6 +33,10 @@ export default function reducerMethod(state, action) {
     case 'RESET_GAME': {
       return {
         ...INITIAL_STATE,
+        // // patch #####################################
+        // in case a bug
+        // correctGuesses: [false, false, false],
+        // wrongGuesses: [false, false, false],
       };
     }
     case 'GAMEOVER_MY_FRIEND': {
@@ -51,7 +55,7 @@ export default function reducerMethod(state, action) {
     case 'SET_BG_KEYBOARD_LETTER': {
       return {
         ...state,
-        keyboardLetterBG: action.setBG,
+        keyboardLetterBG: { ...action.setBG },
       };
     }
     case 'SET_TOO_SHORT': {
@@ -64,7 +68,7 @@ export default function reducerMethod(state, action) {
       // blocks table
       const { row } = state.currentBlock;
       const setNew = [...state.blocksTable];
-      const setNewBlock = action.newBlocks;
+      const setNewBlock = [...action.newBlocks];
       setNew.splice(row, 1, setNewBlock);
 
       // currentBlock
@@ -96,7 +100,7 @@ export default function reducerMethod(state, action) {
     case 'SET_BLOCKS_TABLE': {
       return {
         ...state,
-        blocksTable: action.setNewBlocksTable,
+        blocksTable: [...action.setNewBlocksTable],
       };
     }
     case 'DELETE_BLOCKS_TABLE': {
@@ -115,7 +119,7 @@ export default function reducerMethod(state, action) {
     case 'CURRENT_BLOCK_RESET_POSITION': {
       return {
         ...state,
-        currentBlock: INITIAL_STATE.currentBlock,
+        currentBlock: { row: 0, column: 0 },
       };
     }
     case 'CURRENT_BLOCK_SET_POSITION': {
@@ -136,7 +140,7 @@ export default function reducerMethod(state, action) {
       };
     }
     case 'CORRECT_GUESSED': {
-      const setArray = state.correctGuesses;
+      const setArray = [...state.correctGuesses];
       setArray.pop();
       setArray.unshift(true);
 
@@ -147,7 +151,7 @@ export default function reducerMethod(state, action) {
       };
     }
     case 'WRONG_GUESSED': {
-      const setArray = state.wrongGuesses;
+      const setArray = [...state.wrongGuesses];
       setArray.pop();
       setArray.unshift(true);
 
