@@ -16,12 +16,6 @@ import keySetIdentifier from './utils/keySetIdentifier';
 import reducerMethod, { INITIAL_STATE } from './utils/levelReducer';
 
 export default function AppContainer() {
-  // const defaultKeyboardBg = { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' };
-  // const [blocksTable, setBlocksTable] = useState(() => '');
-  // const [currentBlock, setCurrentBlock] = useState(() => ({ row: 0, column: 0 }));
-  // const [isTooShort, setIsTooShort] = useState(() => false);
-  // const [keyboardLetterBg, setKeyboardLetterBg] = useState(() => defaultKeyboardBg);
-  // const [is, setIs] = useState(() => ({ validWord: true, gameOver: false, text: '' }));
   const [state, dispatch] = useReducer(reducerMethod, INITIAL_STATE);
   const [data, dispatchFetch] = useFetchData();
   const shouldRun = state.currentWord < data.length;
@@ -30,7 +24,6 @@ export default function AppContainer() {
 
   useEffect(() => {
     const array = createBlockTable(wordData.length);
-    // setBlocksTable(() => array);
     dispatch({ type: 'SET_BLOCKS_TABLE', setNewBlocksTable: array });
   }, [wordData]);
 
@@ -38,18 +31,23 @@ export default function AppContainer() {
   useEffect(() => {
     const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
     const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'My hopes are high. Do your best next time.'];
+    const GAMEOVERMESSAGE = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover. - Horace Jackson Brown Jr.";
+
     const randomIdx = Math.floor(Math.random() * listOfGameOverM.length);
     const randomMsg = listOfGameOverM[randomIdx];
 
-    if (isGameOver) {
+    if (isGameOver && state.level === 3) {
+      setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 5000);
+    } else if (isGameOver) {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: randomMsg }), 5000);
     }
-  }, [state.wrongGuesses]);
+  }, [state.level, state.wrongGuesses]);
 
   useEffect(() => {
     const isGameOverFinishTheGame = state.correctGuesses.every((isCorrect) => isCorrect);
     const GAMEOVERMESSAGE = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover. - Horace Jackson Brown Jr.";
 
+    // Gameove display when level 4 and 3 same gameover lines
     if (isGameOverFinishTheGame && state.level === 4) {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 3000);
     } else if (isGameOverFinishTheGame) {
@@ -132,6 +130,8 @@ export default function AppContainer() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={-1}
     >
+      {/* put this into one component */}
+      {/* also if possible add a confetti after each correct guessed */}
       <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len) && shouldRun} />
       <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
       <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${wordData.toUpperCase()}"`} isDisplay={state.wrongGuessed} />

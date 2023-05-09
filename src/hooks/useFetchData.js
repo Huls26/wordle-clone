@@ -31,8 +31,6 @@ export default function useFetchData() {
     }
   }
 
-  // const [words, setWord] = useState(() => ['']);
-  // const [level, setLevel] = useState(() => 1);
   const [state, dispatch] = useReducer(fetchMethod, INITIAL_STATE);
 
   useEffect(() => {

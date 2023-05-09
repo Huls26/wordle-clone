@@ -8,13 +8,13 @@ import { PropTypes } from 'prop-types';
 export default function NavLevel({ correctGuesses, wrongGuesses, level }) {
   const keyId = useId();
 
-  const displayCorrectGuessed = correctGuesses.map((isGuessed, idx) => (isGuessed ? <AiFillStar className="text-green" key={keyId + idx} /> : <AiOutlineStar key={keyId + idx} />));
+  const displayCorrectGuessed = correctGuesses.map((isGuessed, idx) => (isGuessed ? <AiFillStar className="text-green" key={keyId + idx} /> : <AiOutlineStar id="out-star" key={keyId + idx} />));
 
   const displayWrongGuessed = wrongGuesses.map((isGuessed, idx) => (isGuessed ? <ImCross className="text-red text-lg" key={keyId + idx} /> : <RxCrossCircled key={keyId + idx} />));
 
   return (
     <section className="flex w-[20em] justify-between mb-2 items-center">
-      <div className="flex space-x-1 text-2xl text-yellow">
+      <div className="flex space-x-1 text-2xl text-yellow" data-testid="correct-guesses-star">
         { displayCorrectGuessed }
       </div>
 

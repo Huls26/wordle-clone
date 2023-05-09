@@ -25,10 +25,8 @@ export default function keySetIdentifier(
       const mapBlocks = checkGuessWord(data, state.blocksTable[row]);
       const mapWord = mapBlocks.map(({ letter }) => letter).join('');
       const isGuessed = data === mapWord.toLowerCase();
-      // const upperCase = data.toUpperCase();
 
       if (isGuessed) {
-        // fix display when correct guessed and when wrong !!!
         dispatch({ type: 'CORRECT_GUESSED' });
 
         setTimeout(
@@ -47,13 +45,8 @@ export default function keySetIdentifier(
       fetchDictionaryThenRun(
         mapWord,
         () => {
-          // enterGuess(
-          //   mapBlocks,
-          //   dispatch,
-          // );
           dispatch({ type: 'ENTER_GUESS_SET_BLOCKSTABLE', newBlocks: mapBlocks });
           dispatch({ type: 'LOADING_GAME', setLoading: false });
-          // setKeyboardLetterBg(() => collectLetterBg(mapBlocks));
           const setBG = collectLetterBg(mapBlocks);
           dispatch({ type: 'SET_BG_KEYBOARD_LETTER', setBG });
         },
@@ -62,22 +55,10 @@ export default function keySetIdentifier(
       )
         .then((isValid) => {
           if (!isValid) {
-            // setIs((prevValue) => ({
-            //   ...prevValue,
-            //   validWord: isValid,
-            // }));
-            // setTimeout(() => setIs((prevValue) => ({
-            //   ...prevValue,
-            //   validWord: !prevValue.validWord,
-            // })), 3000);
             dispatch({ type: 'SET_VALID_WORD', setCondition: false });
             dispatch({ type: 'LOADING_GAME', setLoading: false });
             setTimeout(() => dispatch({ type: 'SET_VALID_WORD', setCondition: true }), 3000);
           } else if (row >= 5 && !isGuessed && !state.gameOver) {
-            // setIs((prevValue) => ({
-            //   ...prevValue,
-            //   text: `GAME OVER The word is "${upperCase}"`,
-            // }));
             dispatch({ type: 'WRONG_GUESSED' });
             dispatch({ type: 'LOADING_GAME', setLoading: false });
             setTimeout(
@@ -91,8 +72,6 @@ export default function keySetIdentifier(
           }
         });
     } else {
-      // setIsTooShort((prev) => !prev);
-      // setTimeout(() => setIsTooShort((prev) => !prev), 5000);
       dispatch({ type: 'SET_TOO_SHORT', setCondition: true });
       setTimeout(() => dispatch({ type: 'SET_TOO_SHORT', setCondition: false }), 3000);
     }

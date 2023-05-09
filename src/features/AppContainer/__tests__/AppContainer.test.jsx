@@ -12,7 +12,7 @@ describe('AppContainer', () => {
     test('Check length of blocksRow, the length should be 5 for level 1 the mock value is "tests"', async () => {
       render(<AppContainer />);
       const [rowBlocksElement] = await screen.findAllByTestId('row-guess-container');
-      expect(rowBlocksElement.children.length).toBe(5);
+      expect(rowBlocksElement.children).toHaveLength(5);
     });
 
     describe('userEvent BlockTable and keyboard', () => {
@@ -52,12 +52,14 @@ describe('AppContainer', () => {
         const keyElementT = container.querySelector('[data-skbtn="T"]');
         const keyElementE = container.querySelector('[data-skbtn="E"]');
         const keyElementR = container.querySelector('[data-skbtn="R"]');
+        const keyElementEnter = container.querySelector('[data-skbtn="Enter"]');
 
         await userEvent.click(keyElementW);
         await userEvent.click(keyElementA);
         await userEvent.click(keyElementT);
         await userEvent.click(keyElementE);
         await userEvent.click(keyElementR);
+        await userEvent.click(keyElementEnter);
 
         const [displayBlocksElementW] = await findAllByRole('heading', { name: 'W' });
         const [displayBlocksElementA] = await findAllByRole('heading', { name: 'A' });
@@ -71,10 +73,7 @@ describe('AppContainer', () => {
         expect(displayBlocksElementE).toBeInTheDocument();
         expect(displayBlocksElementR).toBeInTheDocument();
 
-        waitFor(
-          () => expect(container.querySelector('[data-skbtn="W"]')).toHaveClass('bg-gray-dark'),
-          { timeout: 10000 },
-        );
+        expect(container.querySelector('[data-skbtn="W"]')).toHaveClass('bg-gray-dark');
       });
     });
 
@@ -288,14 +287,12 @@ describe('AppContainer', () => {
     });
 
     describe('level, correct, and wrong guess display', () => {
-      test('displays stars, cross, and level', () => {
-        const { container } = <AppContainer />;
+      test('displays stars, cross, and level', async () => {
+        const { getByTestId } = render(<AppContainer />);
 
-        waitFor(() => {
-          const correctElement = container.querySelector('#root > main > section:nth-child(2) > div:nth-child(1) > svg:nth-child(1)');
+        const correctElement = getByTestId('correct-guesses-star');
 
-          expect(correctElement).toBeVisible();
-        }, { timeout: 5000 });
+        expect(correctElement).toBeInTheDocument();
       });
 
       test('correct guess will display correct message something like that and earn a star', async () => {
@@ -380,10 +377,10 @@ describe('AppContainer', () => {
         await userEvent.click(keyElementA);
         await userEvent.click(keyElementEnter);
         const gameOverElement = await screen.findByText('Your guess is wrong. The word is "TESTS"');
+        expect(gameOverElement).toBeInTheDocument();
 
         waitFor(() => {
           // const gameOverElement = screen.getByText('Your guess is wrong. The word is "TESTS"');
-          expect(gameOverElement).toBeInTheDocument();
           expect(wrongMarkElement).toHaveClass('text-red');
         }, { timeout: 5000 });
       });

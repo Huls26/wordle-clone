@@ -1,7 +1,6 @@
 // import fetchDictionaryThenRun from '@features/AppContainer/utils/fetchDictionaryThenRun';
 
 export default async function fetchData(setData, level) {
-  // const minimumValue = 5;
   let maxValue;
 
   if (level === 1) {
@@ -14,15 +13,6 @@ export default async function fetchData(setData, level) {
     maxValue = 8;
   }
 
-  // console.log(maxValue, level);
-  // function runCondition(data) {
-  //   if (data && data.length === maxValue) {
-  //     setData(data);
-  //   } else {
-  //     fetchData(setData, maxValue);
-  //   }
-  // }
-
   // https://random-word-api.vercel.app/
   try {
     // const res = await fetch('https://random-word-api.herokuapp.com/word');
@@ -30,10 +20,7 @@ export default async function fetchData(setData, level) {
     const res = await fetch(GET);
     const data = await res.json();
 
-    // console.log(data);
     if (data) {
-      // fetchDictionaryThenRun(data, () => runCondition(data))
-      //   .then((inDictionary) => (!inDictionary && fetchData(setData)));
       setData(data);
     }
   } catch (error) {
