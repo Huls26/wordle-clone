@@ -6,9 +6,11 @@ import KeyBoard from '@features/Keyboard';
 import TitleBar from '@features/TitleBar';
 
 import DisplayWarning from './components/DisplayWarning';
-import GameOver from './components/GameOver';
+// import GameOver from './components/GameOver';
 import SkeletonTailwind from './components/SkeletonTailwind';
 import NavLevel from './components/NavLevel';
+import Confetti from './components/Confetti';
+import DisplayComponents from './components/DisplayComponents';
 
 import createBlockTable from './utils/createBlockTable';
 import keySetIdentifier from './utils/keySetIdentifier';
@@ -27,7 +29,6 @@ export default function AppContainer() {
     dispatch({ type: 'SET_BLOCKS_TABLE', setNewBlocksTable: array });
   }, [wordData]);
 
-  console.log(wordData);
   useEffect(() => {
     const isGameOver = state.wrongGuesses.every((isWrong) => isWrong);
     const listOfGameOverM = ["GAME OVER That's pretty much it!", 'Sad to say, but Game over!', 'What are you doing, my friend? try again.', "I'm out of words to say. Better luck next time.", 'GAME OVER!!!', 'GAME OVER TRY AGAIN!', "Don't worry; even I can't finish this f****** game.", 'My hopes are high. Do your best next time.'];
@@ -37,7 +38,13 @@ export default function AppContainer() {
     const randomMsg = listOfGameOverM[randomIdx];
 
     if (isGameOver && state.level === 3) {
-      setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 5000);
+      setTimeout(
+        () => {
+          dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE });
+          dispatch({ type: 'RELEASE_CONFETTI' });
+        },
+        5000,
+      );
     } else if (isGameOver) {
       setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: randomMsg }), 5000);
     }
@@ -49,7 +56,13 @@ export default function AppContainer() {
 
     // Gameove display when level 4 and 3 same gameover lines
     if (isGameOverFinishTheGame && state.level === 4) {
-      setTimeout(() => dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE }), 3000);
+      setTimeout(
+        () => {
+          dispatch({ type: 'GAMEOVER_MY_FRIEND', setText: GAMEOVERMESSAGE });
+          dispatch({ type: 'RELEASE_CONFETTI' });
+        },
+        3000,
+      );
     } else if (isGameOverFinishTheGame) {
       setTimeout(() => {
         dispatchFetch({ type: 'RESET_FETCH_DATA' });
@@ -130,18 +143,15 @@ export default function AppContainer() {
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={-1}
     >
-      {/* put this into one component */}
-      {/* also if possible add a confetti after each correct guessed */}
-      <DisplayWarning bg="bg-purple" text="Guess the Word" isDisplay={Boolean(!len) && shouldRun} />
-      <DisplayWarning bg="bg-purple" text="You guessed the word keep it up!!" isDisplay={state.correctGuessed} />
-      <DisplayWarning bg="bg-orange" text={`Your guess is wrong. The word is "${wordData.toUpperCase()}"`} isDisplay={state.wrongGuessed} />
-      <GameOver
-        playAgain={() => playAgainBtn()}
-        text={state.gameOverText}
-        isDisplay={state.gameOver}
+      <DisplayComponents
+        len={len}
+        shouldRun={shouldRun}
+        state={state}
+        wordData={wordData}
+        playAgainBtn={() => playAgainBtn()}
       />
-      <DisplayWarning bg="bg-orange" text="Too short" isDisplay={state.isTooShort} />
-      <DisplayWarning bg="bg-orange" text="Invalid word" isDisplay={!state.validWord} />
+
+      {state.forConfetti && <Confetti isComplete={state.forConfetti} />}
 
       <TitleBar />
       <NavLevel

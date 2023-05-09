@@ -14,10 +14,17 @@ export const INITIAL_STATE = {
   keyboardLetterBG: { bgGrayDark: 'none', bgGreen: 'none', bgYellow: 'none' },
   validWord: true,
   isLoading: false,
+  forConfetti: false,
 };
 
 export default function reducerMethod(state, action) {
   switch (action.type) {
+    case 'RELEASE_CONFETTI': {
+      return {
+        ...state,
+        forConfetti: true,
+      };
+    }
     case 'INCREASE_LEVEL': {
       return {
         ...INITIAL_STATE,
