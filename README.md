@@ -8,3 +8,4 @@
 ![Screenshot](./src/assets/sampleImage/sample4.png)
 ![Screenshot](./src/assets/sampleImage/sample5.png)
 ![Screenshot](./src/assets/sampleImage/sample6.png)
+![Screenshot](./src/assets/sampleImage/sample7.png)

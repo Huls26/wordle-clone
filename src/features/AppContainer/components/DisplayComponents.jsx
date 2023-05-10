@@ -23,10 +23,13 @@ export default function DisplayComponents({
 }
 
 DisplayComponents.propTypes = {
-  len: PropTypes.number.isRequired,
+  len: PropTypes.oneOfType([
+    PropTypes.number.isRequired,
+    PropTypes.bool.isRequired,
+  ]).isRequired,
   shouldRun: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  state: PropTypes.array.isRequired,
+  state: PropTypes.object.isRequired,
   wordData: PropTypes.string.isRequired,
   playAgainBtn: PropTypes.func.isRequired,
 };

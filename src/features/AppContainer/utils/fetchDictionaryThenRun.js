@@ -3,7 +3,8 @@ export default async function fetchDictionaryThenRun(toCheck, callback, ERROR_HA
     const checkWord = `https://api.dictionaryapi.dev/api/v2/entries/en/${toCheck}`;
     const res = await fetch(checkWord);
     const isValidWord = await res.json();
-    const isArray = validWords.includes(toCheck.toLowerCase()) || Array.isArray(isValidWord);
+    const setArray = [...validWords, 'every'];
+    const isArray = setArray.includes(toCheck.toLowerCase()) || Array.isArray(isValidWord);
 
     if (isArray) {
       callback();
